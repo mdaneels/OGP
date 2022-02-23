@@ -1,2 +1,2 @@
-# OGP
-OGP project
+# OGP Practicum 1
+OGP practicum I: Bestanden
