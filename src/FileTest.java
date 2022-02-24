@@ -7,6 +7,7 @@ public class FileTest {
 
     @Before
     public void setUp() {
+
         file = new File("testfile");
     }
 

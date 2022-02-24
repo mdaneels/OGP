@@ -16,13 +16,13 @@ public class File {
     /**
      * Variable containing the size of the file.
      */
-    private int size;
+    private int size = 0;
 
     /**
      * Variable containing whether the name of the file and the size of
      * the file can be changed.
      */
-    private boolean writable;
+    private boolean writable = true;
 
     /**
      * Variable that contains the creation date time.
@@ -49,8 +49,6 @@ public class File {
 
     public File(String name) {
         setName(name);
-        //setSize(0);
-        //setWritable(true);
         initCreationDateTime();
     }
 
@@ -86,37 +84,83 @@ public class File {
         this.changeDateTime = new Date();
     }
 
+    /**
+     * Sets the size of the file to the given size in bytes
+     * @pre the given size must be valid
+     *      | isValidSize(size)
+     * @param size
+     *        the new size for the file
+     */
     public void setSize(int size) {
         assert isValidSize(size):
                 "Class Invariant: valid size";
         this.size = size;
     }
 
+    /**
+     * Return a boolean reflecting whether the given size is valid
+     * @param size
+     *        the size needed to be checked
+     * @return true if the given size is not negative and is not larger than the maximum size
+     *         |result == ((size >= 0) && (size <= getMaxSize()))
+     */
     public boolean isValidSize(int size) {
         return (size >= 0) && (size <= maxSize);
     }
 
     /**
-     * Enlage the size of the file with the given amount.
+     * Enlages the size of the file with the given amount.
      *
-     * @pre the amount must be larger than zero.
-     *
+     * @pre the amount must be valid and accepted for enlargment
+     *      |canAcceptForEnlarge(amount)
      * @param amount
-     *        the amount of bytes to add to the size.
-     *
+     *        the amount of bytes needed to be add to the size
      * @effect The new size of this file is equal to the old size incremented with the given amount of bytes.
-     * | new.getSize() = this.getSize() + amount
+     *         | new.getSize() = this.getSize() + amount
      */
     public void enlarge(int amount) {
         assert canAcceptForEnlarge(amount) :
                 "Precondition: Acceptable amount for enlarge";
         setSize(size + amount);
-        }
     }
 
+    /**
+     * Returns a boolean reflecting whether the given amount is accepted to enlarge the size of the file
+     * @param amount
+     *        amount of bytes needed to be checked
+     * @return true if the given amount is not negative, the file is writable and ...
+     */
     public boolean canAcceptForEnlarge(int amount) {
-        return ((amount > 0) && (isWritable()) && isValidSize(size + amount));
+        return (((amount > 0) && (isWritable())); // && isValidSize(size + amount));
     }
+
+    /**
+     * Shortens the size of the file with the given amount.
+     *
+     * @pre the amount must be valid and accepted for shortening
+     *      |canAcceptForShorten(amount)
+     * @param amount
+     *        the amount of bytes to reduce the size
+     * @effect The new size of this file is equal to the old size reduced with the given amount of bytes.
+     *         | new.getSize() = this.getSize() - amount
+     */
+    public void shorten(int amount) {
+        assert canAcceptForShorten(amount) :
+                "Precondition: Acceptable amount for shorten";
+        setSize(size - amount);
+    }
+
+    /**
+     * Returns a boolean reflecting whether the given amount is accepted to shorten the size of the file
+     * @param amount
+     *        amount of bytes needed to be checked
+     * @return true if the given amount is not negative, the file is writable and ...
+     */
+    public boolean canAcceptForShorten(int amount) {
+        return (((amount > 0) && (isWritable())); // && isValidSize(size - amount));
+    }
+
+
     /**
      * Get the creationDateTime.
      * @return creationDateTime
