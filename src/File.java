@@ -1,10 +1,9 @@
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import static java.lang.Integer.MAX_VALUE;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 public class File {
     public String getName() {
@@ -40,7 +39,7 @@ public class File {
     /**
      * Variable containing the max size that this file can have.
      */
-    private int maxSize = MAX_VALUE;
+    private final int maxSize = MAX_VALUE;
 
     public File(String name, int size, boolean writable) {
         //setName(name);
@@ -74,6 +73,24 @@ public class File {
      * @return True if and only if the input name only contains letters, capital or not,
      * numbers, . , - or _ and has at least one character.
      */
+    public Date getCreationDateTime() {
+        return this.creationDateTime;
+    }
+
+    public Date getChangeDateTime() {
+        return this.changeDateTime;
+    }
+
+    public boolean hasOverLappingUsePeriod(File file) {
+        Date firstDateTimeF1 = this.getCreationDateTime();
+        Date firstDateTimeF2 = file.getCreationDateTime();
+        Date changeDateTimeF1 = this.getChangeDateTime();
+        Date changeDateTimeF2 = file.getChangeDateTime();
+
+        return (firstDateTimeF1.before(firstDateTimeF2)) && changeDateTimeF1.after(changeDateTimeF2);
+
+    }
+
     private boolean checkName(String name){
         Pattern p = Pattern.compile("([a-zA-Z0-9.-_]*)");
         Matcher m = p.matcher(name);
