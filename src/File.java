@@ -1,20 +1,46 @@
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import static java.lang.Integer.MAX_VALUE;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
 public class File {
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Variable containing the name of the file.
+     */
     private String name;
+
+    /**
+     * Variable containing the size of the file.
+     */
     private int size;
+
+    /**
+     * Variable containing whether the name of the file and the size of
+     * the file can be changed.
+     */
     private boolean writable;
+
+    /**
+     * Variable that contains the creation date time.
+     */
     private Date creationDateTime;
+
+    /**
+     * Variable that contains the last time the file was changed.
+     */
     private Date changeDateTime;
-    private String WEGDOEN;
 
-
-    private final int maxSize = MAX_VALUE;
+    /**
+     * Variable containing the max size that this file can have.
+     */
+    private int maxSize = MAX_VALUE;
 
     public File(String name, int size, boolean writable) {
         //setName(name);
@@ -25,7 +51,7 @@ public class File {
     }
 
     public File(String name) {
-        //setName("name");
+        setName(name);
         //setSize(0);
         //setWritable(true);
     }
@@ -41,26 +67,38 @@ public class File {
         this.changeDateTime = new Date();
     }
 
+    /**
+     * Checks if the input name is a valid name that can be used.
+     * @param name
+     *        The name that needs to be checked.
+     * @return True if and only if the input name only contains letters, capital or not,
+     * numbers, . , - or _ and has at least one character.
+     */
     private boolean checkName(String name){
         Pattern p = Pattern.compile("([a-zA-Z0-9.-_]*)");
         Matcher m = p.matcher(name);
-        boolean correctSymbols;
+        boolean correctSymbols = false;
         boolean isMatched = m.matches();
         if (isMatched){
             correctSymbols = true;
         }
-        else{
-            correctSymbols = false;
-        }
-        return correctSymbols;
+        return correctSymbols && (name.length() > 0);
     }
 
+    /**
+     * Set the name to the given input name if the input name is valid.
+     * @param name
+     *        Name that we want to call or file
+     * @post The file name only contains letters, capital or not, numbers,
+     *  . , - or _ and contains at least one character. If the input name does not follow these rules, the file
+     *  name will be "undefined".
+     */
     public void setName(String name){
         if (this.checkName(name) && (name.length() > 0)){
             this.name = name;
         }
         else{
-            this.name = "Undefined";
+            this.name = "undefined";
         }
     }
 }
