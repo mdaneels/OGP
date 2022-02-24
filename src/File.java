@@ -131,7 +131,7 @@ public class File {
      * @return true if the given amount is not negative, the file is writable and ...
      */
     public boolean canAcceptForEnlarge(int amount) {
-        return (((amount > 0) && (isWritable())); // && isValidSize(size + amount));
+        return (((amount > 0) && (isWritable()))); // && isValidSize(size + amount));
     }
 
     /**
@@ -157,7 +157,7 @@ public class File {
      * @return true if the given amount is not negative, the file is writable and ...
      */
     public boolean canAcceptForShorten(int amount) {
-        return (((amount > 0) && (isWritable())); // && isValidSize(size - amount));
+        return (((amount > 0) && (isWritable()))); // && isValidSize(size - amount));
     }
 
 
