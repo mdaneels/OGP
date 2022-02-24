@@ -39,6 +39,12 @@ public class File {
      */
     private final int maxSize = MAX_VALUE;
 
+    /**
+     * Constructor to create a File object with a name, size and write permissions.
+     * @param name The name of the file.
+     * @param size The size of the file.
+     * @param writable Whether you want the file to be writable (permissions).
+     */
     public File(String name, int size, boolean writable) {
         setName(name);
         //setSize(size);
@@ -47,8 +53,14 @@ public class File {
         initCreationDateTime();
     }
 
+    /**
+     * Constructor to create a File object with a name. The size will be set to 0.
+     * @param name The name of the file.
+     */
     public File(String name) {
         setName(name);
+        setSize(0);
+        setWritable(true);
         initCreationDateTime();
     }
 
@@ -122,6 +134,7 @@ public class File {
         assert canAcceptForEnlarge(amount) :
                 "Precondition: Acceptable amount for enlarge";
         setSize(size + amount);
+        this.changeChangeDateTime(); // Change the date of last edit
     }
 
     /**
@@ -148,6 +161,7 @@ public class File {
         assert canAcceptForShorten(amount) :
                 "Precondition: Acceptable amount for shorten";
         setSize(size - amount);
+        this.changeChangeDateTime(); // Change the date of last edit
     }
 
     /**
