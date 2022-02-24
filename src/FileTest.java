@@ -11,7 +11,7 @@ public class FileTest {
     }
 
     @Test
-    public void testChangeName() {
+    public void testSetName() {
         assertEquals(file.getName(), "testfile");
         file.setName("&");
         assertEquals(file.getName(), "undefined");

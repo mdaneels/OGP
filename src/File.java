@@ -42,7 +42,7 @@ public class File {
     private final int maxSize = MAX_VALUE;
 
     public File(String name, int size, boolean writable) {
-        //setName(name);
+        setName(name);
         //setSize(size);
         //setWritable(writable);
         //setMaxSize(maxSize);
