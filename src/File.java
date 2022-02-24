@@ -37,18 +37,34 @@ public class File {
         this.creationDateTime = new Date();
     }
 
-    private void changeCreationDateTime(){
+    /**
+     * Set the date when changing a file.
+     */
+    private void changeChangeDateTime(){
         this.changeDateTime = new Date();
     }
 
+    /**
+     * Get the creationDateTime.
+     * @return creationDateTime
+     */
     public Date getCreationDateTime() {
         return this.creationDateTime;
     }
 
+    /**
+     * Get the changeDateTime.
+     * @return changeDateTime
+     */
     public Date getChangeDateTime() {
         return this.changeDateTime;
     }
 
+    /**
+     * Check if the file has an overlapping use period with another file.
+     * @param file The other file.
+     * @return True or false.
+     */
     public boolean hasOverLappingUsePeriod(File file) {
         Date firstDateTimeF1 = this.getCreationDateTime();
         Date firstDateTimeF2 = file.getCreationDateTime();
