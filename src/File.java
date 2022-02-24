@@ -11,6 +11,7 @@ public class File {
     private boolean writable;
     private Date creationDateTime;
     private Date changeDateTime;
+    private String WEGDOEN;
 
 
     private final int maxSize = MAX_VALUE;
