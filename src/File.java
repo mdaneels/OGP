@@ -66,13 +66,6 @@ public class File {
         this.changeDateTime = new Date();
     }
 
-    /**
-     * Checks if the input name is a valid name that can be used.
-     * @param name
-     *        The name that needs to be checked.
-     * @return True if and only if the input name only contains letters, capital or not,
-     * numbers, . , - or _ and has at least one character.
-     */
     public Date getCreationDateTime() {
         return this.creationDateTime;
     }
@@ -91,6 +84,13 @@ public class File {
 
     }
 
+    /**
+     * Checks if the input name is a valid name that can be used.
+     * @param name
+     *        The name that needs to be checked.
+     * @return True if and only if the input name only contains letters, capital or not,
+     * numbers, . , - or _ and has at least one character.
+     */
     private boolean checkName(String name){
         Pattern p = Pattern.compile("([a-zA-Z0-9.-_]*)");
         Matcher m = p.matcher(name);
