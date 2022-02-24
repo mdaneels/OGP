@@ -23,6 +23,15 @@ public class File {
         //initCreationDateTime();
     }
 
+    public File(String name) {
+        //setName("name");
+        //setSize(0);
+        //setWritable(true);
+    }
+
+    /**
+     * Set the initial date when creating the file.
+     */
     private void initCreationDateTime(){
         this.creationDateTime = new Date();
     }
