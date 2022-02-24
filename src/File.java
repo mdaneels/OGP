@@ -41,6 +41,24 @@ public class File {
         this.changeDateTime = new Date();
     }
 
+    public Date getCreationDateTime() {
+        return this.creationDateTime;
+    }
+
+    public Date getChangeDateTime() {
+        return this.changeDateTime;
+    }
+
+    public boolean hasOverLappingUsePeriod(File file) {
+        Date firstDateTimeF1 = this.getCreationDateTime();
+        Date firstDateTimeF2 = file.getCreationDateTime();
+        Date changeDateTimeF1 = this.getChangeDateTime();
+        Date changeDateTimeF2 = file.getChangeDateTime();
+
+        return (firstDateTimeF1.before(firstDateTimeF2)) && changeDateTimeF1.after(changeDateTimeF2);
+
+    }
+
     private boolean checkName(String name){
         Pattern p = Pattern.compile("([a-zA-Z0-9.-_]*)");
         Matcher m = p.matcher(name);
