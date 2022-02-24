@@ -6,9 +6,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class File {
-    public String getName() {
-        return name;
-    }
 
     /**
      * Variable containing the name of the file.
@@ -46,13 +43,32 @@ public class File {
         //setSize(size);
         //setWritable(writable);
         //setMaxSize(maxSize);
-        //initCreationDateTime();
+        initCreationDateTime();
     }
 
     public File(String name) {
         setName(name);
         //setSize(0);
         //setWritable(true);
+        initCreationDateTime();
+    }
+
+    /**
+     * Set the writable variable when creating the file.
+     * @param writable
+     *        Whether you want the file to be able to change size and name.
+     */
+    public void setWritable(boolean writable) {
+        this.writable = writable;
+    }
+
+    /**
+     * Get the name of the file.
+     * @return name
+     *         The name of the file.
+     */
+    public String getName() {
+        return name;
     }
 
     /**

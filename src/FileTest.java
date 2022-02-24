@@ -19,5 +19,7 @@ public class FileTest {
         assertEquals(file.getName(), "newname");
         file.setName("");
         assertEquals(file.getName(), "undefined");
+        file.setName("name.with_signs-");
+        assertEquals(file.getName(), "name.with_signs-");
     }
 }
