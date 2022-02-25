@@ -74,6 +74,15 @@ public class File {
     }
 
     /**
+     * Get the writable boolean of the file
+     * @return writable
+     *         Whether the file can change name and file size.
+     */
+    private boolean isWritable() {
+        return writable;
+    }
+
+    /**
      * Get the name of the file.
      * @return name
      *         The name of the file.
@@ -144,7 +153,7 @@ public class File {
      * @return true if the given amount is not negative, the file is writable and ...
      */
     public boolean canAcceptForEnlarge(int amount) {
-        return (((amount > 0) && (isWritable()))); // && isValidSize(size + amount));
+        return (((amount > 0) && (this.isWritable()))); // && isValidSize(size + amount));
     }
 
     /**
@@ -171,7 +180,7 @@ public class File {
      * @return true if the given amount is not negative, the file is writable and ...
      */
     public boolean canAcceptForShorten(int amount) {
-        return (((amount > 0) && (isWritable()))); // && isValidSize(size - amount));
+        return (((amount > 0) && (this.isWritable()))); // && isValidSize(size - amount));
     }
 
 
@@ -214,7 +223,7 @@ public class File {
      * numbers, . , - or _ and has at least one character.
      */
     private boolean checkName(String name){
-        Pattern p = Pattern.compile("([a-zA-Z0-9.-_]*)");
+        Pattern p = Pattern.compile("([a-zA-Z0-9._-]*)");
         Matcher m = p.matcher(name);
         boolean correctSymbols = false;
         boolean isMatched = m.matches();

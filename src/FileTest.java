@@ -15,12 +15,12 @@ public class FileTest {
     public void testSetName() {
         assertEquals(file.getName(), "testfile");
         file.setName("&");
-        assertEquals(file.getName(), "undefined");
+        assertEquals("undefined", file.getName());
         file.setName("newname");
-        assertEquals(file.getName(), "newname");
+        assertEquals("newname", file.getName());
         file.setName("");
-        assertEquals(file.getName(), "undefined");
+        assertEquals("undefined", file.getName());
         file.setName("name.with_signs-");
-        assertEquals(file.getName(), "name.with_signs-");
+        assertEquals("name.with_signs-", file.getName());
     }
 }
