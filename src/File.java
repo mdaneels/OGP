@@ -41,7 +41,7 @@ public class File {
 
     public File(String name, int size, boolean writable) {
         setName(name);
-        //setSize(size);
+        setSize(size);
         //setWritable(writable);
         //setMaxSize(maxSize);
         initCreationDateTime();
@@ -59,6 +59,10 @@ public class File {
      */
     public void setWritable(boolean writable) {
         this.writable = writable;
+    }
+
+    public boolean isWritable() {
+        return writable;
     }
 
     /**
@@ -97,6 +101,10 @@ public class File {
         this.size = size;
     }
 
+    public int getSize() {
+        return size;
+    }
+
     /**
      * Return a boolean reflecting whether the given size is valid
      * @param size
@@ -131,7 +139,7 @@ public class File {
      * @return true if the given amount is not negative, the file is writable and ...
      */
     public boolean canAcceptForEnlarge(int amount) {
-        return (((amount > 0) && (isWritable())); // && isValidSize(size + amount));
+        return ((amount > 0) && (isWritable())); // && isValidSize(size + amount));
     }
 
     /**
@@ -157,7 +165,7 @@ public class File {
      * @return true if the given amount is not negative, the file is writable and ...
      */
     public boolean canAcceptForShorten(int amount) {
-        return (((amount > 0) && (isWritable())); // && isValidSize(size - amount));
+        return ((amount > 0) && (isWritable())); // && isValidSize(size - amount));
     }
 
 

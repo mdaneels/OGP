@@ -1,26 +1,43 @@
-import static org.junit.Assert.*;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static java.lang.Integer.MAX_VALUE;
+
+import static org.junit.Assert.assertEquals;
 
 public class FileTest {
 
-    private static File file;
+    private static File file1;
+    private File file2;
 
     @Before
     public void setUp() {
-
-        file = new File("testfile");
+        file1 = new File("testfile");
+        file2 = new File("practica", 5000, true);
     }
 
     @Test
     public void testSetName() {
-        assertEquals(file.getName(), "testfile");
-        file.setName("&");
-        assertEquals(file.getName(), "undefined");
-        file.setName("newname");
-        assertEquals(file.getName(), "newname");
-        file.setName("");
-        assertEquals(file.getName(), "undefined");
-        file.setName("name.with_signs-");
-        assertEquals(file.getName(), "name.with_signs-");
+        assertEquals(file1.getName(), "testfile");
+        file1.setName("&");
+        assertEquals(file1.getName(), "undefined");
+        file1.setName("newname");
+        assertEquals(file1.getName(), "newname");
+        file1.setName("");
+        assertEquals(file1.getName(), "undefined");
+        file1.setName("name.with_signs-");
+        assertEquals(file1.getName(), "name.with_signs-");
+    }
+
+    @Test
+    public void testEnlarge_LegalCase() {
+        file2.enlarge(300);
+        assertEquals(5300, file2.getSize());
+    }
+
+    @Test
+    public void testShorten_LegalCase() {
+        file2.shorten(500);
+        assertEquals(4500, file2.getSize());
     }
 }
