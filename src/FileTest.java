@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static java.lang.Integer.MAX_VALUE;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
@@ -39,5 +40,12 @@ public class FileTest {
     public void testShorten_LegalCase() {
         file2.shorten(500);
         assertEquals(4500, file2.getSize());
+    }
+
+    @Test
+    public void testChangeDate() {
+        file2.shorten(300);
+        Date dateNow = new Date();
+        assertEquals(dateNow ,file2.getChangeDateTime());
     }
 }
