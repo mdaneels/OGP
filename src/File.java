@@ -112,7 +112,7 @@ public class File {
      *        the new size for the file
      */
     public void setSize(int size) {
-        assert isValidSize(size):
+        assert canHaveAsSize(size):
                 "Class Invariant: valid size";
         this.size = size;
     }
@@ -128,7 +128,7 @@ public class File {
      * @return true if the given size is not negative and is not larger than the maximum size
      *         |result == ((size >= 0) && (size <= getMaxSize()))
      */
-    public boolean isValidSize(int size) {
+    public boolean canHaveAsSize(int size) {
         return (size >= 0) && (size <= maxSize);
     }
 
@@ -156,7 +156,7 @@ public class File {
      * @return true if the given amount is not negative, the file is writable and ...
      */
     public boolean canAcceptForEnlarge(int amount) {
-        return (((amount > 0) && (isWritable())); // && isValidSize(size + amount));
+        return ((amount > 0) && (isWritable())); // && canHaveAsSize(size + amount));
     }
 
     /**
