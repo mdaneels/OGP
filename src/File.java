@@ -139,7 +139,7 @@ public class File {
      *      |canAcceptForEnlarge(amount)
      * @param amount
      *        the amount of bytes needed to be add to the size
-     * @effect The new size of this file is equal to the old size incremented with the given amount of bytes.
+     * @post The new size of this file is equal to the old size incremented with the given amount of bytes.
      *         | new.getSize() = this.getSize() + amount
      */
     public void enlarge(int amount) {
@@ -166,7 +166,7 @@ public class File {
      *      |canAcceptForShorten(amount)
      * @param amount
      *        the amount of bytes to reduce the size
-     * @effect The new size of this file is equal to the old size reduced with the given amount of bytes.
+     * @post The new size of this file is equal to the old size reduced with the given amount of bytes.
      *         | new.getSize() = this.getSize() - amount
      */
     public void shorten(int amount) {
