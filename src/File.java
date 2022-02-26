@@ -39,6 +39,12 @@ public class File {
      */
     private final int maxSize = MAX_VALUE;
 
+    /**
+     * Constructor to create a File object with a name, size and write permissions.
+     * @param name The name of the file.
+     * @param size The size of the file.
+     * @param writable Whether you want the file to be writable (permissions).
+     */
     public File(String name, int size, boolean writable) {
         setName(name);
         setSize(size);
@@ -47,6 +53,10 @@ public class File {
         initCreationDateTime();
     }
 
+    /**
+     * Constructor to create a File object with a name. The size will be set to 0.
+     * @param name The name of the file.
+     */
     public File(String name) {
         setName(name);
         initCreationDateTime();
@@ -60,6 +70,12 @@ public class File {
     public void setWritable(boolean writable) {
         this.writable = writable;
     }
+
+    /**
+     * Get the writable boolean of the file
+     * @return writable
+     *         Whether the file can change name and file size.
+     */
 
     public boolean isWritable() {
         return writable;
@@ -130,6 +146,7 @@ public class File {
         assert canAcceptForEnlarge(amount) :
                 "Precondition: Acceptable amount for enlarge";
         setSize(size + amount);
+        this.changeChangeDateTime(); // Change the date of last edit
     }
 
     /**
@@ -139,7 +156,7 @@ public class File {
      * @return true if the given amount is not negative, the file is writable and ...
      */
     public boolean canAcceptForEnlarge(int amount) {
-        return ((amount > 0) && (isWritable())); // && isValidSize(size + amount));
+        return (((amount > 0) && (isWritable())); // && isValidSize(size + amount));
     }
 
     /**
@@ -208,7 +225,7 @@ public class File {
      * numbers, . , - or _ and has at least one character.
      */
     private boolean checkName(String name){
-        Pattern p = Pattern.compile("([a-zA-Z0-9.-_]*)");
+        Pattern p = Pattern.compile("([a-zA-Z0-9._-]*)");
         Matcher m = p.matcher(name);
         boolean correctSymbols = false;
         boolean isMatched = m.matches();
