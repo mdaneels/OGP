@@ -37,7 +37,7 @@ public class File {
     /**
      * Variable containing the max size that this file can have.
      */
-    private final int maxSize = MAX_VALUE;
+    private static final long maxSize = MAX_VALUE;
 
     /**
      * Constructor to create a File object with a name, size and write permissions.
@@ -48,7 +48,7 @@ public class File {
     public File(String name, int size, boolean writable) {
         setName(name);
         setSize(size);
-        //setWritable(writable);
+        setWritable(writable);
         //setMaxSize(maxSize);
         initCreationDateTime();
     }
@@ -117,8 +117,10 @@ public class File {
         this.size = size;
     }
 
-    public int getSize() {
-        return size;
+    public int getSize() {return size;}
+
+    public static long getMaxSize() {
+        return maxSize;
     }
 
     /**
