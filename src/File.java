@@ -91,20 +91,6 @@ public class File {
     }
 
     /**
-     * Set the initial date when creating the file.
-     */
-    private void initCreationDateTime(){
-        this.creationDateTime = new Date();
-    }
-
-    /**
-     * Set the date when changing a file.
-     */
-    private void changeChangeDateTime(){
-        this.changeDateTime = new Date();
-    }
-
-    /**
      * Sets the size of the file to the given size in bytes
      * @pre the given size must be valid
      *      | isValidSize(size)
@@ -175,6 +161,7 @@ public class File {
         assert canAcceptForShorten(amount) :
                 "Precondition: Acceptable amount for shorten";
         setSize(size - amount);
+        this.changeChangeDateTime(); // Change the date of last edit
     }
 
     /**
@@ -187,6 +174,19 @@ public class File {
         return ((amount > 0) && (isWritable())); // && isValidSize(size - amount));
     }
 
+    /**
+     * Set the initial date when creating the file.
+     */
+    private void initCreationDateTime(){
+        this.creationDateTime = new Date();
+    }
+
+    /**
+     * Set the date when changing a file.
+     */
+    private void changeChangeDateTime(){
+        this.changeDateTime = new Date();
+    }
 
     /**
      * Get the creationDateTime.

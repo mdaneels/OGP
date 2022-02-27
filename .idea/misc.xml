@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="EntryPointsManager">
-    <entry_points version="2.0" />
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/docs" />
+    <option name="OPTION_SCOPE" value="private" />
+    <option name="OTHER_OPTIONS" value="-tagletpath /Users/arthur/Documents/cs/java/AnnotationsDoclets_v17.jar  -taglet be.kuleuven.cs.som.taglet.InvarTaglet  -taglet be.kuleuven.cs.som.taglet.PreTaglet  -taglet be.kuleuven.cs.som.taglet.ThrowsTaglet  -taglet be.kuleuven.cs.som.taglet.PostTaglet  -taglet be.kuleuven.cs.som.taglet.EffectTaglet  -taglet be.kuleuven.cs.som.taglet.NoteTaglet  -taglet be.kuleuven.cs.som.taglet.ReturnTaglet  -Xdoclint:none  -link https://docs.oracle.com/en/java/javase/17/docs/api/" />
   </component>
   <component name="ProjectKey">
     <option name="state" value="project://e2804f05-5315-4fc6-a121-c522a6c26470" />
