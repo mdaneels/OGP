@@ -37,7 +37,7 @@ public class File {
     /**
      * Variable containing the max size that this file can have.
      */
-    private final int maxSize = MAX_VALUE;
+    private static final long maxSize = MAX_VALUE;
 
     /**
      * Constructor to create a File object with a name, size and write permissions.
@@ -47,8 +47,8 @@ public class File {
      */
     public File(String name, int size, boolean writable) {
         setName(name);
-        //setSize(size);
-        //setWritable(writable);
+        setSize(size);
+        setWritable(writable);
         //setMaxSize(maxSize);
         initCreationDateTime();
     }
@@ -59,8 +59,6 @@ public class File {
      */
     public File(String name) {
         setName(name);
-        setSize(0);
-        setWritable(true);
         initCreationDateTime();
     }
 
@@ -78,7 +76,8 @@ public class File {
      * @return writable
      *         Whether the file can change name and file size.
      */
-    private boolean isWritable() {
+
+    public boolean isWritable() {
         return writable;
     }
 
@@ -92,20 +91,6 @@ public class File {
     }
 
     /**
-     * Set the initial date when creating the file.
-     */
-    private void initCreationDateTime(){
-        this.creationDateTime = new Date();
-    }
-
-    /**
-     * Set the date when changing a file.
-     */
-    private void changeChangeDateTime(){
-        this.changeDateTime = new Date();
-    }
-
-    /**
      * Sets the size of the file to the given size in bytes
      * @pre the given size must be valid
      *      | isValidSize(size)
@@ -113,9 +98,15 @@ public class File {
      *        the new size for the file
      */
     public void setSize(int size) {
-        assert isValidSize(size):
+        assert canHaveAsSize(size):
                 "Class Invariant: valid size";
         this.size = size;
+    }
+
+    public int getSize() {return size;}
+
+    public static long getMaxSize() {
+        return maxSize;
     }
 
     /**
@@ -125,7 +116,7 @@ public class File {
      * @return true if the given size is not negative and is not larger than the maximum size
      *         |result == ((size >= 0) && (size <= getMaxSize()))
      */
-    public boolean isValidSize(int size) {
+    public boolean canHaveAsSize(int size) {
         return (size >= 0) && (size <= maxSize);
     }
 
@@ -136,7 +127,7 @@ public class File {
      *      |canAcceptForEnlarge(amount)
      * @param amount
      *        the amount of bytes needed to be add to the size
-     * @effect The new size of this file is equal to the old size incremented with the given amount of bytes.
+     * @post The new size of this file is equal to the old size incremented with the given amount of bytes.
      *         | new.getSize() = this.getSize() + amount
      */
     public void enlarge(int amount) {
@@ -153,7 +144,7 @@ public class File {
      * @return true if the given amount is not negative, the file is writable and ...
      */
     public boolean canAcceptForEnlarge(int amount) {
-        return (((amount > 0) && (this.isWritable()))); // && isValidSize(size + amount));
+        return ((amount > 0) && (isWritable())); // && canHaveAsSize(size + amount));
     }
 
     /**
@@ -163,7 +154,7 @@ public class File {
      *      |canAcceptForShorten(amount)
      * @param amount
      *        the amount of bytes to reduce the size
-     * @effect The new size of this file is equal to the old size reduced with the given amount of bytes.
+     * @post The new size of this file is equal to the old size reduced with the given amount of bytes.
      *         | new.getSize() = this.getSize() - amount
      */
     public void shorten(int amount) {
@@ -180,9 +171,22 @@ public class File {
      * @return true if the given amount is not negative, the file is writable and ...
      */
     public boolean canAcceptForShorten(int amount) {
-        return (((amount > 0) && (this.isWritable()))); // && isValidSize(size - amount));
+        return ((amount > 0) && (isWritable())); // && isValidSize(size - amount));
     }
 
+    /**
+     * Set the initial date when creating the file.
+     */
+    private void initCreationDateTime(){
+        this.creationDateTime = new Date();
+    }
+
+    /**
+     * Set the date when changing a file.
+     */
+    private void changeChangeDateTime(){
+        this.changeDateTime = new Date();
+    }
 
     /**
      * Get the creationDateTime.
