@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="AnnotationsDoclets_v17">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../OGP/AnnotationsDoclets_v17.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
