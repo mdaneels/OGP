@@ -163,7 +163,7 @@ public class File {
         assert canAcceptForShorten(amount) :
                 "Precondition: Acceptable amount for shorten";
         if (!isWritable()) {
-            throw illegalActionException
+            throw illegalActionException;
         }
         setSize(size - amount);
         // if (size != OldSize - amount) { throw new IllegalArgumentException }
@@ -217,8 +217,8 @@ public class File {
      */
     public boolean hasOverLappingUsePeriod(File file)
     throws illegalFileException {
-        if (!isValidCompareFile(File file)) {
-            throw illegalFileException
+        if (!isValidCompareFile(file)) {
+            throw illegalFileException;
         }
         //if (!hasBeenChanged()) {
             //throw illegal...
