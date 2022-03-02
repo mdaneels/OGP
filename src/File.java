@@ -1,13 +1,16 @@
 import java.util.Date;
-import java.text.SimpleDateFormat;
+
 import static java.lang.Integer.MAX_VALUE;
-import static java.lang.Integer.max;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A class of files involving a name, size, the date of creation, the date of the last editing moment and a facility concering the write permission
+ * @version 1.0
+ * @author Arthur Cremelie, Matias Daneels, Eva Haanen
+ */
 public class File {
-
     /**
      * Variable containing the name of the file.
      */
@@ -40,10 +43,12 @@ public class File {
     private static final long maxSize = MAX_VALUE;
 
     /**
-     * Constructor to create a File object with a name, size and write permissions.
+     * Initializes a file with the given name, size and write permissions.
      * @param name The name of the file.
      * @param size The size of the file.
      * @param writable Whether you want the file to be writable (permissions).
+     * @post if the given size is not negative and smaller than the maximum size,
+     * the initial size of this file is set to the given size
      */
     public File(String name, int size, boolean writable) {
         setName(name);
@@ -63,9 +68,9 @@ public class File {
     }
 
     /**
-     * Set the writable variable when creating the file.
+     * Sets the writable variable when creating the file.
      * @param writable
-     *        Whether you want the file to be able to change size and name.
+     *        True if it's possible to change size and name of the file.
      */
     public void setWritable(boolean writable) {
         this.writable = writable;
@@ -74,7 +79,7 @@ public class File {
     /**
      * Get the writable boolean of the file
      * @return writable
-     *         Whether the file can change name and file size.
+     *        True if it's possible to change size and name of the file
      */
 
     public boolean isWritable() {
@@ -86,6 +91,7 @@ public class File {
      * @return name
      *         The name of the file.
      */
+    @Basic
     public String getName() {
         return name;
     }
@@ -96,6 +102,7 @@ public class File {
      *      | isValidSize(size)
      * @param size
      *        the new size for the file
+     * @post the size of the file is set to the given size
      */
     public void setSize(int size) {
         assert canHaveAsSize(size):
@@ -103,39 +110,51 @@ public class File {
         this.size = size;
     }
 
-    public int getSize() {return size;}
+    /**
+     * Returns the size of the file.
+     * @return name
+     *         The size of the file.
+     */
+    @Basic
+    public int getSize() {
+        return size;
+    }
+
 
     public static long getMaxSize() {
         return maxSize;
     }
 
     /**
-     * Return a boolean reflecting whether the given size is valid
+     * Returns a boolean reflecting whether the given size is valid
      * @param size
      *        the size needed to be checked
      * @return true if the given size is not negative and is not larger than the maximum size
      *         |result == ((size >= 0) && (size <= getMaxSize()))
      */
+
     public boolean canHaveAsSize(int size) {
         return (size >= 0) && (size <= maxSize);
     }
 
     /**
-     * Enlages the size of the file with the given amount.
+     * Enlagres the size of the file with the given amount.
      *
-     * @pre the amount must be valid and accepted for enlargment
+     * @pre the amount must be valid and accepted for enlargement
      *      |canAcceptForEnlarge(amount)
      * @param amount
-     *        the amount of bytes needed to be add to the size
+     *        the amount of bytes needed to be added to the size
      * @post The new size of this file is equal to the old size incremented with the given amount of bytes.
      *         | new.getSize() = this.getSize() + amount
+     * @throws ...
      */
-    public void enlarge(int amount) {
-        assert canAcceptForEnlarge(amount) :
-                "Precondition: Acceptable amount for enlarge";
+    public void enlarge(int amount)
+    throws IllegalActionException {
         if (!isWritable()) {
             throw new IllegalActionException(writable, this);
         }
+        assert canAcceptForEnlarge(amount) :
+                "Precondition: Acceptable amount for enlarge";
         int oldSize = this.size;
         setSize(size + amount);
         if (size == oldSize + amount) {
@@ -147,7 +166,7 @@ public class File {
      * Returns a boolean reflecting whether the given amount is accepted to enlarge the size of the file
      * @param amount
      *        amount of bytes needed to be checked
-     * @return true if the given amount is not negative, the file is writable and ...
+     * @return true if the given amount is not negative
      */
     public boolean canAcceptForEnlarge(int amount) {
         return (amount > 0); // && canHaveAsSize(size + amount));
@@ -165,11 +184,11 @@ public class File {
      */
     public void shorten(int amount)
     throws IllegalActionException {
-        assert canAcceptForShorten(amount) :
-                "Precondition: Acceptable amount for shorten";
         if (!isWritable()) {
             throw new IllegalActionException(writable, this);
-            }
+        }
+        assert canAcceptForShorten(amount) :
+                "Precondition: Acceptable amount for shorten";
         int oldSize = this.size;
         setSize(size - amount);
         if (size == oldSize - amount) {
