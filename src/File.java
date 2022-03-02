@@ -133,7 +133,9 @@ public class File {
     public void enlarge(int amount) {
         assert canAcceptForEnlarge(amount) :
                 "Precondition: Acceptable amount for enlarge";
+        //oldSize = this.size
         setSize(size + amount);
+        // if (size != Oldsize + amount) { throw new IllegalArgumentAcception }
         this.changeChangeDateTime(); // Change the date of last edit
     }
 
@@ -160,7 +162,11 @@ public class File {
     public void shorten(int amount) {
         assert canAcceptForShorten(amount) :
                 "Precondition: Acceptable amount for shorten";
+        if (!isWritable()) {
+            throw illegalActionException
+        }
         setSize(size - amount);
+        // if (size != OldSize - amount) { throw new IllegalArgumentException }
         this.changeChangeDateTime(); // Change the date of last edit
     }
 
@@ -209,7 +215,14 @@ public class File {
      * @param file The other file.
      * @return True or false.
      */
-    public boolean hasOverLappingUsePeriod(File file) {
+    public boolean hasOverLappingUsePeriod(File file)
+    throws illegalFileException {
+        if (!isValidCompareFile(File file)) {
+            throw illegalFileException
+        }
+        //if (!hasBeenChanged()) {
+            //throw illegal...
+        //}
         Date firstDateTimeF1 = this.getCreationDateTime();
         Date firstDateTimeF2 = file.getCreationDateTime();
         Date changeDateTimeF1 = this.getChangeDateTime();
@@ -217,6 +230,14 @@ public class File {
 
         return (firstDateTimeF1.before(firstDateTimeF2)) && changeDateTimeF1.after(changeDateTimeF2);
 
+    }
+
+    public boolean isValidCompareFile(File file){
+        return (file != null) && (file != this) && (file.getChangeDateTime() != null);
+    }
+
+    public boolean hasBeenChanged() {
+        return changeDateTime != null;
     }
 
     /**
