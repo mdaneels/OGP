@@ -1,3 +1,6 @@
+/**
+ *
+ */
 public class IllegalActionException
 extends RuntimeException {
     private final boolean writable;

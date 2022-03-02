@@ -133,10 +133,14 @@ public class File {
     public void enlarge(int amount) {
         assert canAcceptForEnlarge(amount) :
                 "Precondition: Acceptable amount for enlarge";
-        //oldSize = this.size
+        if (!isWritable()) {
+            throw new IllegalActionException(writable, this);
+        }
+        int oldSize = this.size;
         setSize(size + amount);
-        // if (size != Oldsize + amount) { throw new IllegalArgumentAcception }
-        this.changeChangeDateTime(); // Change the date of last edit
+        if (size == oldSize + amount) {
+            this.changeChangeDateTime(); // Change the date of last edit
+        }
     }
 
     /**
@@ -146,28 +150,31 @@ public class File {
      * @return true if the given amount is not negative, the file is writable and ...
      */
     public boolean canAcceptForEnlarge(int amount) {
-        return ((amount > 0) && (isWritable())); // && canHaveAsSize(size + amount));
+        return (amount > 0); // && canHaveAsSize(size + amount));
     }
 
     /**
      * Shortens the size of the file with the given amount.
      *
-     * @pre the amount must be valid and accepted for shortening
+     * @pre the amount must be valid
      *      |canAcceptForShorten(amount)
      * @param amount
      *        the amount of bytes to reduce the size
      * @post The new size of this file is equal to the old size reduced with the given amount of bytes.
      *         | new.getSize() = this.getSize() - amount
      */
-    public void shorten(int amount) {
+    public void shorten(int amount)
+    throws IllegalActionException {
         assert canAcceptForShorten(amount) :
                 "Precondition: Acceptable amount for shorten";
         if (!isWritable()) {
-            throw illegalActionException
-        }
+            throw new IllegalActionException(writable, this);
+            }
+        int oldSize = this.size;
         setSize(size - amount);
-        // if (size != OldSize - amount) { throw new IllegalArgumentException }
-        this.changeChangeDateTime(); // Change the date of last edit
+        if (size == oldSize - amount) {
+            this.changeChangeDateTime(); // Change the date of last edit
+        }
     }
 
     /**
@@ -177,7 +184,7 @@ public class File {
      * @return true if the given amount is not negative, the file is writable and ...
      */
     public boolean canAcceptForShorten(int amount) {
-        return ((amount > 0) && (isWritable())); // && isValidSize(size - amount));
+        return (amount > 0); //&& (isWritable())); // && isValidSize(size - amount));
     }
 
     /**
@@ -216,12 +223,12 @@ public class File {
      * @return True or false.
      */
     public boolean hasOverLappingUsePeriod(File file)
-    throws illegalFileException {
-        if (!isValidCompareFile(File file)) {
-            throw illegalFileException
+    throws IllegalArgumentException {
+        if (!isValidFile(File file)) {
+            throw new IllegalArgumentException;
         }
         //if (!hasBeenChanged()) {
-            //throw illegal...
+            //throw new IllegalTimeException
         //}
         Date firstDateTimeF1 = this.getCreationDateTime();
         Date firstDateTimeF2 = file.getCreationDateTime();
@@ -232,7 +239,7 @@ public class File {
 
     }
 
-    public boolean isValidCompareFile(File file){
+    public boolean isValidFile(File file){
         return (file != null) && (file != this) && (file.getChangeDateTime() != null);
     }
 
@@ -266,7 +273,12 @@ public class File {
      *  . , - or _ and contains at least one character. If the input name does not follow these rules, the file
      *  name will be "undefined".
      */
-    public void setName(String name){
+    public void setName(String name)
+    throws IllegalActionException {
+        if (!isWritable()) {
+            throw new IllegalActionException(writable, this);
+        }
+
         if (this.checkName(name) && (name.length() > 0)){
             this.name = name;
         }
