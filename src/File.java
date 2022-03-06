@@ -240,13 +240,13 @@ public class File {
      * Check if the file has an overlapping use period with another file.
      * @param file
      *        The other file.
-     * @return True if and only if the file has an overlapping period of changing the file.
+     * @return True if and only if the file has an overlapping period of changing the file. If the file has not been changed
+     *          or isn't valid it will return false.
      */
     public boolean hasOverLappingUsePeriod(File file)
-    throws IllegalFileException {
-        // probleem: dit moet niet defensief geprogrammeerd worden, wel totaal
+    {
         if (!isValidFile(file) || !hasBeenChanged(file)) {
-            throw new IllegalFileException(file);
+            return false;
         }
         Date firstDateTimeF1 = this.getCreationDateTime();
         Date firstDateTimeF2 = file.getCreationDateTime();
