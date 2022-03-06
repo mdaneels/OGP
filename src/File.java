@@ -91,7 +91,7 @@ public class File {
      * @return name
      *         The name of the file.
      */
-    @Basic
+    //@Basic
     public String getName() {
         return name;
     }
@@ -115,7 +115,7 @@ public class File {
      * @return name
      *         The size of the file.
      */
-    @Basic
+    //@Basic
     public int getSize() {
         return size;
     }
@@ -243,8 +243,8 @@ public class File {
      */
     public boolean hasOverLappingUsePeriod(File file)
     throws IllegalArgumentException {
-        if (!isValidFile(File file)) {
-            throw new IllegalArgumentException;
+        if (!isValidFile(file)) {
+            throw new IllegalArgumentException();
         }
         //if (!hasBeenChanged()) {
             //throw new IllegalTimeException
