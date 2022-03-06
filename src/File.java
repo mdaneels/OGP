@@ -238,17 +238,16 @@ public class File {
 
     /**
      * Check if the file has an overlapping use period with another file.
-     * @param file The other file.
-     * @return True or false.
+     * @param file
+     *        The other file.
+     * @return True if and only if the file has an overlapping period of changing the file.
      */
     public boolean hasOverLappingUsePeriod(File file)
-    throws IllegalArgumentException {
-        if (!isValidFile(file)) {
-            throw new IllegalArgumentException();
+    throws IllegalFileException {
+        // probleem: dit moet niet defensief geprogrammeerd worden, wel totaal
+        if (!isValidFile(file) || !hasBeenChanged(file)) {
+            throw new IllegalFileException(file);
         }
-        //if (!hasBeenChanged()) {
-            //throw new IllegalTimeException
-        //}
         Date firstDateTimeF1 = this.getCreationDateTime();
         Date firstDateTimeF2 = file.getCreationDateTime();
         Date changeDateTimeF1 = this.getChangeDateTime();
@@ -262,8 +261,8 @@ public class File {
         return (file != null) && (file != this) && (file.getChangeDateTime() != null);
     }
 
-    public boolean hasBeenChanged() {
-        return changeDateTime != null;
+    public boolean hasBeenChanged(File file) {
+        return file.getChangeDateTime() != null;
     }
 
     /**
