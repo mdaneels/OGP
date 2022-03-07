@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A class of files involving a name, size, the date of creation, the date of the last editing moment and a facility concering the write permission
+ * A class for files involving a name, size, the date of creation, the date of the last editing moment and a facility concering the write permission.
  * @version 1.0
  * @author Arthur Cremelie, Matias Daneels, Eva Haanen
  */
@@ -242,10 +242,11 @@ public class File {
      *        The other file.
      * @return True if and only if the file has an overlapping period of changing the file. If the file has not been changed
      *          or isn't valid it will return false.
+     *          | (firstDateTimeF1.before(firstDateTimeF2)) && changeDateTimeF1.after(changeDateTimeF2)
      */
     public boolean hasOverLappingUsePeriod(File file)
     {
-        if (!isValidFile(file) || !hasBeenChanged(file)) {
+        if (!isValidFile(file)) {
             return false;
         }
         Date firstDateTimeF1 = this.getCreationDateTime();
@@ -257,12 +258,14 @@ public class File {
 
     }
 
+    /**
+     * Checks if a file is valid or not.
+     * @param file The file to check.
+     * @return  True if and only if the file is not null, the file is not equal to itself and the file has changed.
+     *          | (file != null) && (file != this) && (file.getChangeDateTime() != null)
+     */
     public boolean isValidFile(File file){
         return (file != null) && (file != this) && (file.getChangeDateTime() != null);
-    }
-
-    public boolean hasBeenChanged(File file) {
-        return file.getChangeDateTime() != null;
     }
 
     /**
@@ -299,9 +302,11 @@ public class File {
 
         if (this.checkName(name) && (name.length() > 0)){
             this.name = name;
+            this.changeChangeDateTime(); // Change the date of last edit
         }
         else{
             this.name = "undefined";
+            this.changeChangeDateTime(); // Change the date of last edit
         }
     }
 }

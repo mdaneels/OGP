@@ -12,8 +12,9 @@ public class FileTest {
     private File file2;
 
     @Before
-    public void setUp() {
+    public void setUp() throws InterruptedException{
         file1 = new File("testfile");
+        Thread.sleep(100);
         file2 = new File("practica", 5000, true);
     }
 
@@ -47,5 +48,18 @@ public class FileTest {
         file2.shorten(300);
         Date dateNow = new Date();
         assertEquals(dateNow ,file2.getChangeDateTime());
+    }
+
+    // probleem om dit te testen: programma wacht effectief een aantal ms om een andere datum te verkrijgen
+    @Test
+    public void testHasOverlappingUsePeriod()
+        throws InterruptedException {
+        file1.setName("newNewName");
+        Thread.sleep(100);
+        file2.setName("newName");
+        Thread.sleep(100);
+        file1.setName("newName");
+        assertEquals(true, file1.hasOverLappingUsePeriod(file2));
+        assertEquals(false,file2.hasOverLappingUsePeriod(file1));
     }
 }
