@@ -134,7 +134,7 @@ public class File {
      */
 
     public boolean canHaveAsSize(int size) {
-        return (size >= 0) && (size <= maxSize);
+        return (this.size >= 0) && (this.size <= maxSize);
     }
 
     /**
