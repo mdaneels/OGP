@@ -23,7 +23,7 @@ import java.util.Date;
  * 
  * @note		See Coding Rule 48 for more info on the encapsulation of class invariants.
  */
-public class File {
+public class File extends Item{
 
     /**********************************************************
      * Constructors
@@ -59,9 +59,8 @@ public class File {
      */
 	@Raw
 	public File(String name, int size, boolean writable) {
-        setName(name);
+        super(name, writable);
         setSize(size);
-        setWritable(writable);
     }
 
     /**
@@ -91,15 +90,6 @@ public class File {
     private String name = null;
 
     /**
-     * Return the name of this file.
-     * @note		See Coding Rule 19 for the Basic annotation.
-     */
-    @Raw @Basic 
-    public String getName() {
-        return name;
-    }
-
-    /**
      * Check whether the given name is a legal name for a file.
      * 
      * @param  	name
@@ -115,27 +105,6 @@ public class File {
     }
     
     /**
-     * Set the name of this file to the given name.
-     *
-     * @param   name
-     * 			The new name for this file.
-     * @post    If the given name is valid, the name of
-     *          this file is set to the given name,
-     *          otherwise the name of the file is set to a valid name (the default).
-     *          | if (isValidName(name))
-     *          |      then new.getName().equals(name)
-     *          |      else new.getName().equals(getDefaultName())
-     */
-    @Raw @Model 
-    private void setName(String name) {
-        if (isValidName(name)) {
-        		this.name = name;
-        } else {
-        		this.name = getDefaultName();
-        }
-    }
-    
-    /**
      * Return the name for a new file which is to be used when the
      * given name is not valid.
      *
@@ -143,7 +112,7 @@ public class File {
      *         | isValidName(result)
      */
     @Model
-    private static String getDefaultName() {
+    public String getDefaultName() {
         return "new_file";
     }
 
@@ -176,8 +145,7 @@ public class File {
         }
     }
 
-    
-    
+
     /**********************************************************
      * size - nominal programming
      **********************************************************/
@@ -428,27 +396,5 @@ public class File {
      * Variable registering whether or not this file is writable.
      */
     private boolean isWritable = true;
-    
-    /**
-     * Check whether this file is writable.
-     */
-    @Raw @Basic
-    public boolean isWritable() {
-        return isWritable;
-    }
-
-    /**
-     * Set the writability of this file to the given writability.
-     *
-     * @param isWritable
-     *        The new writability
-     * @post  The given writability is registered as the new writability
-     *        for this file.
-     *        | new.isWritable() == isWritable
-     */
-    @Raw 
-    public void setWritable(boolean isWritable) {
-        this.isWritable = isWritable;
-    }
     
 }
