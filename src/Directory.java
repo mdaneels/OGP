@@ -117,4 +117,54 @@ public class Directory extends Item{
         }
         return false;
     }
+
+    /**
+     * If the item is in this directory, give the index, if not throw NotInMapException.
+     * @param inputItem The item we want the index of.
+     * @return The index of the inputItem in this directory.
+     *        | getItemAt(index) == inputItem
+     * @throws NotInMapException
+     *        The item is not in this directory.
+     *        | for each item in this.items():
+     *        | !(inputItem == item)
+     */
+    public int getIndexOf(Item inputItem){
+        int index = 0;
+        for (Item item: items){
+            if (inputItem == item){
+                return index;
+            }
+            index++;
+        }
+        throw new NotInMapException(this, inputItem.getName());
+    }
+
+    /**
+     * Return whether the inputItem is in this directory or not. This method also check if the inputItem is in
+     * directories in this directory and further.
+     *
+     * @param inputItem The item we want to know if this item is in this directory.
+     * @return True if the inputItem is directly or indirectly in this directory.
+     *        | result == inputItem in getItems()
+     */
+    public boolean hasAsItem(Item inputItem){
+        for (Item item: items){
+            if (item instanceof Directory){
+                if ( ((Directory)item).hasAsItem(inputItem)){
+                    return true;
+                }
+            }
+            if (item == inputItem){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Return a list of the items in this directory, this is list is in alphabetic order.
+     */
+    public List getItems(){
+        return items;
+    }
 }
