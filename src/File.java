@@ -16,6 +16,9 @@ import java.util.Date;
  * 
  * @author  Mark Dreesen
  * @author  Tommy Messelis
+ * @author  Arthur Cremelie
+ * @author  Matias Daneels
+ * @author  Eva Haanen
  * @version 3.3
  * 
  * @note		See Coding Rule 48 for more info on the encapsulation of class invariants.
