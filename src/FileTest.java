@@ -6,6 +6,9 @@ import org.junit.*;
 /**
  * A JUnit test class for testing the public methods of the File Class  
  * @author Tommy Messelis
+ * @author  Arthur Cremelie
+ * @author  Matias Daneels
+ * @author  Eva Haanen
  *
  */
 public class FileTest {
