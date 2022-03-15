@@ -12,7 +12,7 @@ import java.util.Objects;
  * @author Matias Daneels
  * @version 1.0
  */
-public abstract class Item {
+public abstract class SystemItem {
 
     /**
      * String containing the name of the item.
@@ -20,25 +20,48 @@ public abstract class Item {
     public String name = null;
 
     /**
-     * Boolean containing whether the item can be changed, functionality may very for different subclasses.
+     * Directory where the item is in.
      */
-    public boolean isWritable;
+    public Directory directory;
 
     /**
-     * Constructor making a new item and setting the name, isWritable variable and directory of this item.
+     * Constructor making a new item and setting the name and directory of this item.
      *
      * @param name The name for the new item we make.
-     * @param writable Whether the item is changeable.
      *
-     * @effect isWritable variable is set to writable parameter.
-     *      | setWritable(writable)
      * @effect set name to the given name.
      *      | setName(name)
+     * @effect set directory to the given directory.
      */
     @Raw
-    public Item(String name, boolean writable){
+    public SystemItem(String name, Directory directory){
         setName(name);
-        setWritable(writable);
+        setDirectory(directory);
+    }
+
+    /**
+     * Set the directory to the given directory.
+     *
+     * @param directory The directory we want to set our directory to.
+     * @throws IllegalArgumentException
+     *        The given directory is null.
+     *        | directory == null
+     */
+    @Raw @Basic
+    public void setDirectory(Directory directory){
+        if (canHaveAsDirectory(directory)) {
+            this.directory = directory;
+        }
+    }
+
+    /**
+     * Returns whether the directory is a valid directory for this item.
+     */
+    public boolean canHaveAsDirectory(Directory directory){
+        if (directory == null){
+            throw new IllegalArgumentException("Directory cannot be null");
+        }
+        return true;
     }
 
     /**
@@ -63,29 +86,6 @@ public abstract class Item {
     }
 
     /**
-     * Set the writability of this item to the given writability.
-     *
-     * @param isWritable
-     *        The new writability
-     * @post  The given writability is registered as the new writability
-     *        for this item.
-     *        | new.isWritable() == isWritable
-     */
-    @Raw
-    protected void setWritable(boolean isWritable) {
-        this.isWritable = isWritable;
-    }
-
-    /**
-     * Check whether this file is writable.
-     */
-    @Raw @Basic
-    protected boolean isWritable() {
-        return isWritable;
-    }
-
-
-    /**
      * Check whether the given name is a legal name for an item.
      *
      * @param  	name
@@ -96,7 +96,7 @@ public abstract class Item {
      * 			| result ==
      * 			|	(name != null) && name.matches("[a-zA-Z_0-9.-]+")
      */
-    protected static boolean isValidName(String name) {
+    protected boolean isValidName(String name) {
         return (name != null && name.matches("[a-zA-Z_0-9.-]+"));
     }
 
@@ -110,7 +110,6 @@ public abstract class Item {
 
     /**
      * Return the name of this item.
-     * @note		See Coding Rule 19 for the Basic annotation.
      */
     @Raw @Basic
     public String getName() {

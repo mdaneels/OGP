@@ -24,7 +24,7 @@ import java.util.Date;
  * 
  * @note		See Coding Rule 48 for more info on the encapsulation of class invariants.
  */
-public class File extends AbstractItem {
+public class File extends WritableItem {
 
     /**********************************************************
      * Constructors
@@ -60,17 +60,17 @@ public class File extends AbstractItem {
      */
 	@Raw
 	public File(String name, int size, boolean writable, Directory directory) {
-        super(name, writable, directory);
+        super(name, directory, writable);
         setSize(size);
     }
 
     /**
-     * Constructor making a new file given a name, size, writable
-     * @param name
-     * @param size
-     * @param writable
+     * Constructor making a new file given a name, size and writable variable.
+     * @param name The name for the new file.
+     * @param size The size for the new file.
+     * @param writable Whether we want the file to be changeable or not.
      */
-    public File(String name, int size, boolean writable, AbstractDirectory directory){
+    public File(String name, int size, boolean writable, Directory directory){
         super(name, writable, directory);
         setSize(size);
     }
@@ -85,7 +85,7 @@ public class File extends AbstractItem {
      *         | this(name,0,true)
      */
 	@Raw
-    public File(String name, AbstractDirectory directory) {
+    public File(String name, Directory directory) {
         this(name,0,true, directory);
     }
     
