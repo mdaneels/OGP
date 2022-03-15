@@ -20,7 +20,7 @@ public class FileTest {
 	File fileNotWritable;
 	Date timeBeforeConstructionNotWritable, timeAfterConstructionNotWritable;
 
-	RootDirectory rootDirectory;
+	Directory rootDirectory;
 	
 	@Before
 	public void setUpFixture(){

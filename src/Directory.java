@@ -1,4 +1,3 @@
-import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 
 import java.util.ArrayList;
@@ -169,7 +168,7 @@ public abstract class Directory extends WritableItem{
     }
 
     /**
-     * Check whether the given name is a legal name for an item.
+     * Check whether the given name is a legal name for a directory.
      *
      * @param  	name
      *			The name to be checked

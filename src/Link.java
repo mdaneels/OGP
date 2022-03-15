@@ -1,21 +1,21 @@
-public class Link extends AbstractItem {
+public class Link extends SystemItem {
 
-    private final Item reference;
+    private final SystemItem reference;
     private boolean valid = true;
 
-    public Link(String name, boolean writable, AbstractDirectory directory, Item reference) throws IllegalArgumentException {
-        super(name, writable, directory);
+    public Link(String name, boolean writable, Directory directory, SystemItem reference) throws IllegalArgumentException {
+        super(name, directory);
         if (!isValidReference(reference)) {
             throw new IllegalArgumentException("Invalid reference!");
         }
         this.reference = reference;
     }
 
-    public boolean isValidReference(Item reference){
-        return (reference instanceof File) || (reference instanceof AbstractDirectory);
+    public boolean isValidReference(SystemItem reference){
+        return (reference instanceof File) || (reference instanceof Directory);
     }
 
-    public Item getReference() {
+    public SystemItem getReference() {
         return reference;
     }
 
@@ -25,6 +25,11 @@ public class Link extends AbstractItem {
 
     public void setValid(boolean valid) {
         this.valid = valid;
+    }
+
+    @Override
+    protected boolean isValidName(String name) {
+        return (name != null && name.matches("[a-zA-Z_0-9.-]+"));
     }
 
     public String getDefaultName() {

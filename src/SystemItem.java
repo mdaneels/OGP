@@ -96,9 +96,7 @@ public abstract class SystemItem {
      * 			| result ==
      * 			|	(name != null) && name.matches("[a-zA-Z_0-9.-]+")
      */
-    protected boolean isValidName(String name) {
-        return (name != null && name.matches("[a-zA-Z_0-9.-]+"));
-    }
+    protected abstract boolean isValidName(String name) ;
 
     /**
      * Give the default name for the given item.
@@ -127,7 +125,7 @@ public abstract class SystemItem {
      *        | if (item == null)
      *        | throw IllegalArgumentException
      */
-    public boolean hasSameName(Item item) throws IllegalArgumentException{
+    public boolean hasSameName(SystemItem item) throws IllegalArgumentException{
         if (item == null){
             throw new IllegalArgumentException();
         }

@@ -65,17 +65,6 @@ public class File extends WritableItem {
     }
 
     /**
-     * Constructor making a new file given a name, size and writable variable.
-     * @param name The name for the new file.
-     * @param size The size for the new file.
-     * @param writable Whether we want the file to be changeable or not.
-     */
-    public File(String name, int size, boolean writable, Directory directory){
-        super(name, writable, directory);
-        setSize(size);
-    }
-
-    /**
      * Initialize a new file with given name.
      *
      * @param   name
@@ -383,15 +372,20 @@ public class File extends WritableItem {
         	      other.getModificationTime().before(getCreationTime()) );
     }
 
-    
-    
-    /**********************************************************
-     * writable
-     **********************************************************/
-   
     /**
-     * Variable registering whether or not this file is writable.
+     * Check whether the given name is a legal name for a file.
+     *
+     * @param  	name
+     *			The name to be checked
+     * @return	True if the given string is effective, not
+     * 			empty and consisting only of letters, digits, dots,
+     * 			hyphens and underscores; false otherwise.
+     * 			| result ==
+     * 			|	(name != null) && name.matches("[a-zA-Z_0-9.-]+")
      */
-    private boolean isWritable = true;
+    @Override
+    public boolean isValidName(String name){
+        return (name != null && name.matches("[a-zA-Z_0-9.-]+"));
+    }
     
 }
