@@ -1,5 +1,6 @@
 import be.kuleuven.cs.som.annotate.*;
 
+import java.nio.file.NotDirectoryException;
 import java.util.Date;
 
 /**
@@ -23,7 +24,7 @@ import java.util.Date;
  * 
  * @note		See Coding Rule 48 for more info on the encapsulation of class invariants.
  */
-public class File extends Item{
+public class File extends AbstractItem {
 
     /**********************************************************
      * Constructors
@@ -58,8 +59,19 @@ public class File extends Item{
      * 			thus the object is in a raw state upon entry of the constructor.
      */
 	@Raw
-	public File(String name, int size, boolean writable) {
-        super(name, writable);
+	public File(String name, int size, boolean writable, Directory directory) {
+        super(name, writable, directory);
+        setSize(size);
+    }
+
+    /**
+     * Constructor making a new file given a name, size, writable
+     * @param name
+     * @param size
+     * @param writable
+     */
+    public File(String name, int size, boolean writable, AbstractDirectory directory){
+        super(name, writable, directory);
         setSize(size);
     }
 
@@ -73,8 +85,8 @@ public class File extends Item{
      *         | this(name,0,true)
      */
 	@Raw
-    public File(String name) {
-        this(name,0,true);
+    public File(String name, AbstractDirectory directory) {
+        this(name,0,true, directory);
     }
     
     
@@ -88,21 +100,6 @@ public class File extends Item{
      * @note		See Coding Rule 32, for information on the initialization of fields.
      */
     private String name = null;
-
-    /**
-     * Check whether the given name is a legal name for a file.
-     * 
-     * @param  	name
-     *			The name to be checked
-     * @return	True if the given string is effective, not
-     * 			empty and consisting only of letters, digits, dots,
-     * 			hyphens and underscores; false otherwise.
-     * 			| result ==
-     * 			|	(name != null) && name.matches("[a-zA-Z_0-9.-]+")
-     */
-    public static boolean isValidName(String name) {
-        return (name != null && name.matches("[a-zA-Z_0-9.-]+"));
-    }
     
     /**
      * Return the name for a new file which is to be used when the

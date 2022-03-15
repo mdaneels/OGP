@@ -1,7 +1,6 @@
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Model;
 import be.kuleuven.cs.som.annotate.Raw;
-
 import java.util.Objects;
 
 /**
@@ -9,6 +8,7 @@ import java.util.Objects;
  *
  * @invar name is a valid name.
  *       | IsValidName(name)
+ *
  * @author Matias Daneels
  * @version 1.0
  */
@@ -25,15 +25,15 @@ public abstract class Item {
     public boolean isWritable;
 
     /**
-     * Constructor making a new item and setting hte name and isWritable variable of this item.
+     * Constructor making a new item and setting the name, isWritable variable and directory of this item.
      *
      * @param name The name for the new item we make.
      * @param writable Whether the item is changeable.
      *
-     * @post name of the item is a valid name, rules may be different for subclasses.
-     *      | IsValidName(name)
-     * @post isWritable variable is set to writable parameter.
-     *      | isWritable() == writable
+     * @effect isWritable variable is set to writable parameter.
+     *      | setWritable(writable)
+     * @effect set name to the given name.
+     *      | setName(name)
      */
     @Raw
     public Item(String name, boolean writable){
@@ -94,10 +94,10 @@ public abstract class Item {
      * 			empty and consisting only of letters, digits,
      * 			hyphens and underscores; false otherwise.
      * 			| result ==
-     * 			|	(name != null) && name.matches("[a-zA-Z_0-9-]+")
+     * 			|	(name != null) && name.matches("[a-zA-Z_0-9.-]+")
      */
     protected static boolean isValidName(String name) {
-        return (name != null && name.matches("[a-zA-Z_0-9-]+"));
+        return (name != null && name.matches("[a-zA-Z_0-9.-]+"));
     }
 
     /**

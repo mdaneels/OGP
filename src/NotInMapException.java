@@ -16,7 +16,7 @@ public class NotInMapException extends RuntimeException {
     /**
      * Variable referencing the directory to which an item was not found.
      */
-    private final Directory directory;
+    private final AbstractDirectory directory;
 
     /**
      * Variable referencing the item that was not found in the given directory.
@@ -31,7 +31,7 @@ public class NotInMapException extends RuntimeException {
      * @post	The directory were the item was not found is now this.directory
      * @post    The item that was not found is now this.item.
      */
-    public NotInMapException(Directory directory, String itemName) {
+    public NotInMapException(AbstractDirectory directory, String itemName) {
         this.directory = directory;
         this.itemName = itemName;
     }
@@ -40,7 +40,7 @@ public class NotInMapException extends RuntimeException {
      * Return the directory that does not have the asked item.
      */
     @Basic @Immutable
-    public Directory getDirectory() {
+    public AbstractDirectory getDirectory() {
         return directory;
     }
 
