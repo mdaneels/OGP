@@ -64,6 +64,16 @@ public abstract class SystemItem {
         return true;
     }
 
+
+    // MOET ANDERS VOOR ROOT WANT DAAR KAN DIRECTORY WEL NULL ZIJN! IK ZOU  CANHAVEASDIRECTORY AANPASSEN IN ROOT
+    public boolean hasProperDirectory() {
+        return (canHaveAsDirectory(directory) && (directory.hasAsItem(this)));
+    }
+
+    public Directory getDirectory() {
+        return directory;
+    }
+
     /**
      * Set the name of this item to the given name.
      *
@@ -131,4 +141,37 @@ public abstract class SystemItem {
         }
         return(Objects.equals(getName(), item.getName()));
     }
+
+    public void move(Directory directory){
+        if (!canHaveAsDirectory(directory)) {
+            throw new IllegalArgumentException("Invalid directory!");
+        }
+        if (this instanceof RootDirectory) {
+            throw new IllegalActionException(this);
+        }
+        setDirectory(directory);
+        directory.addItem(this);
+    }
+
+    public RootDirectory getRoot(){
+        if (this instanceof RootDirectory){
+            return (RootDirectory) this;
+        }
+        Directory parent = directory;
+        parent.getRoot();
+    }
+
+    public boolean isDirectOrIndirectChildOf(Directory directory){
+        Directory parent = this.directory;
+        if (parent == directory){
+            return true;
+        }
+        if (!(parent instanceof RootDirectory)){
+            return isDirectOrIndirectChildOf(parent);
+        }
+        return false;
+
+    }
+
+    public abstract  int getTotalDiskUsage();
 }

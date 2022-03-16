@@ -35,4 +35,9 @@ public class Link extends SystemItem {
     public String getDefaultName() {
         return "new_link";
     }
+
+    @Override
+    public int getTotalDiskUsage() {
+        return 0;
+    }
 }

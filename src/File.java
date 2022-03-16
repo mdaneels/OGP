@@ -387,5 +387,9 @@ public class File extends WritableItem {
     public boolean isValidName(String name){
         return (name != null && name.matches("[a-zA-Z_0-9.-]+"));
     }
-    
+
+    @Override
+    public int getTotalDiskUsage() {
+        return size;
+    }
 }

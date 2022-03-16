@@ -182,4 +182,17 @@ public abstract class Directory extends WritableItem{
     protected boolean isValidName(String name) {
         return (name != null && name.matches("[a-zA-Z_0-9-]+"));
     }
+
+    //NOG CONTROLES
+    public void addItem(SystemItem item){
+        items.add(item);
+    }
+
+    @Override
+    public int getTotalDiskUsage(){
+        int totalDiskUsage = 0;
+        for (SystemItem item : items){
+            totalDiskUsage = totalDiskUsage + item.getTotalDiskUsage();
+        }
+    }
 }
