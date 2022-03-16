@@ -179,7 +179,7 @@ public abstract class Directory extends WritableItem{
      * 			|	(name != null) && name.matches("[a-zA-Z_0-9-]+")
      */
     @Override
-    protected boolean isValidName(String name) {
+    public boolean isValidName(String name) {
         return (name != null && name.matches("[a-zA-Z_0-9-]+"));
     }
 

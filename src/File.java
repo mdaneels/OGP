@@ -1,7 +1,9 @@
 import be.kuleuven.cs.som.annotate.*;
 
-import java.nio.file.NotDirectoryException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A class of files.
@@ -20,7 +22,7 @@ import java.util.Date;
  * @author  Arthur Cremelie
  * @author  Matias Daneels
  * @author  Eva Haanen
- * @version 3.3
+ * @version 4.0
  * 
  * @note		See Coding Rule 48 for more info on the encapsulation of class invariants.
  */
@@ -89,6 +91,19 @@ public class File extends WritableItem {
      * @note		See Coding Rule 32, for information on the initialization of fields.
      */
     private String name = null;
+
+    /**
+     * Variable referencing the extension of this file.
+     */
+    private String extension = null;
+
+    /**
+     * Variable referencing the list of possible types of extensions.
+     */
+    private static final List<String> extensions = new ArrayList<String>(
+            Arrays.asList("txt", "pdf", "java")
+    );
+
     
     /**
      * Return the name for a new file which is to be used when the
@@ -100,6 +115,18 @@ public class File extends WritableItem {
     @Model
     public String getDefaultName() {
         return "new_file";
+    }
+
+    /**
+     * Return the extension for a new file which is to be used when the
+     * given extension is not valid.
+     *
+     * @return   A valid file extension.
+     *         | isValidExtension(result)
+     */
+    @Model
+    public String getDefaultExtension() {
+        return extensions.get(0);
     }
 
     /**
@@ -129,6 +156,42 @@ public class File extends WritableItem {
         } else {
             throw new FileNotWritableException(this);
         }
+    }
+
+    private void setExtension(String extension) {
+        if (isValidExtension(extension)) {
+            this.extension; = extension;
+        } else {
+            this.extension = getDefaultExtension();
+        }
+    }
+
+    /**
+     * Check whether the given name is a legal name for a file.
+     *
+     * @param  	name
+     *			The name to be checked
+     * @return	True if the given string is effective, not
+     * 			empty and consisting only of letters, digits, dots,
+     * 			hyphens and underscores; false otherwise.
+     * 			| result ==
+     * 			|	(name != null) && name.matches("[a-zA-Z_0-9.-]+")
+     */
+    @Override
+    public boolean isValidName(String name){
+        return (name != null && name.matches("[a-zA-Z_0-9.-]+"));
+    }
+
+    /**
+     * Check whether the given extension is a legal extension for a file, given the list of possible extensions.
+     *
+     * @param   extension
+     *          The extension to be checked.
+     * @return  True if the given extension is found in the list of possible extensions.
+     *          | extensions.contains(extension)
+     */
+    public static boolean isValidExtension(String extension) {
+        return extensions.contains(extension);
     }
 
 
@@ -370,22 +433,6 @@ public class File extends WritableItem {
         	      getModificationTime().before(other.getCreationTime()) ) &&
         	   ! (other.getCreationTime().before(getCreationTime()) && 
         	      other.getModificationTime().before(getCreationTime()) );
-    }
-
-    /**
-     * Check whether the given name is a legal name for a file.
-     *
-     * @param  	name
-     *			The name to be checked
-     * @return	True if the given string is effective, not
-     * 			empty and consisting only of letters, digits, dots,
-     * 			hyphens and underscores; false otherwise.
-     * 			| result ==
-     * 			|	(name != null) && name.matches("[a-zA-Z_0-9.-]+")
-     */
-    @Override
-    public boolean isValidName(String name){
-        return (name != null && name.matches("[a-zA-Z_0-9.-]+"));
     }
 
     @Override
