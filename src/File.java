@@ -23,8 +23,6 @@ import java.util.List;
  * @author  Matias Daneels
  * @author  Eva Haanen
  * @version 4.0
- * 
- * @note		See Coding Rule 48 for more info on the encapsulation of class invariants.
  */
 public class File extends WritableItem {
 
@@ -160,7 +158,7 @@ public class File extends WritableItem {
 
     private void setExtension(String extension) {
         if (isValidExtension(extension)) {
-            this.extension; = extension;
+            this.extension = extension;
         } else {
             this.extension = getDefaultExtension();
         }

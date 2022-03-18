@@ -158,7 +158,7 @@ public abstract class SystemItem {
             return (RootDirectory) this;
         }
         Directory parent = directory;
-        parent.getRoot();
+        return parent.getRoot();
     }
 
     public boolean isDirectOrIndirectChildOf(Directory directory){

@@ -1,9 +1,6 @@
 import be.kuleuven.cs.som.annotate.Raw;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Class representing a directory, having a list of items.
@@ -183,9 +180,44 @@ public abstract class Directory extends WritableItem{
         return (name != null && name.matches("[a-zA-Z_0-9-]+"));
     }
 
-    //NOG CONTROLES
+    /**
+     * Add an item to this directory.
+     * @param item
+     *        The item we want to add.
+     * @throws IllegalActionException
+     *         If the item cannot be added to this directory.
+     * @effect Set the directory of the given item to this.
+     *         |item.setDirectory(this)
+     */
     public void addItem(SystemItem item){
+        if (!isValidAddItem(item)){
+            throw new IllegalActionException(item);
+        }
         items.add(item);
+        item.setDirectory(this);
+    }
+
+    /**
+     * Check if the item is a valid item to add to this directory
+     * @param item
+     *        The item we want to check if it is valid.
+     * @return return false if the item is null, the item is already in a dictionary or this is in the item itself
+     * (only if item instanceof Directory). Else return true.
+     *         | result == (item != null) && (item.getDirectory() == null) && !(item.hasAsItem(this))
+     */
+    protected boolean isValidAddItem(SystemItem item){
+        if (item == null){
+            return false;
+        }
+        if (item.getDirectory() != null){
+            return false;
+        }
+        if (item instanceof Directory){
+            if (((Directory) item).hasAsItem(this)){
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
