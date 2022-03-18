@@ -27,10 +27,6 @@ public class Link extends SystemItem {
         this.valid = valid;
     }
 
-    @Override
-    protected boolean isValidName(String name) {
-        return (name != null && name.matches("[a-zA-Z_0-9.-]+"));
-    }
 
     public String getDefaultName() {
         return "new_link";

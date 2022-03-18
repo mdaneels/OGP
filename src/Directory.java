@@ -175,8 +175,7 @@ public abstract class Directory extends WritableItem{
      * 			| result ==
      * 			|	(name != null) && name.matches("[a-zA-Z_0-9-]+")
      */
-    @Override
-    public boolean isValidName(String name) {
+    public static boolean isValidName(String name) {
         return (name != null && name.matches("[a-zA-Z_0-9-]+"));
     }
 
@@ -186,10 +185,17 @@ public abstract class Directory extends WritableItem{
      *        The item we want to add.
      * @throws IllegalActionException
      *         If the item cannot be added to this directory.
+     *         | !isValidAddItem(item)
+     * @throws NotRightAccesRightsException
+     *         If writable is false.
+     *         | !sWritable()
      * @effect Set the directory of the given item to this.
-     *         |item.setDirectory(this)
+     *         | item.setDirectory(this)
      */
     public void addItem(SystemItem item){
+        if (!isWritable){
+            throw new NotRightAccesRightsException(this);
+        }
         if (!isValidAddItem(item)){
             throw new IllegalActionException(item);
         }
@@ -220,11 +226,16 @@ public abstract class Directory extends WritableItem{
         return true;
     }
 
+    /**
+     * Get the total disk usage of this directory.
+     * @return The total disk usage of this directory.
+     */
     @Override
     public int getTotalDiskUsage(){
         int totalDiskUsage = 0;
         for (SystemItem item : items){
-            totalDiskUsage = totalDiskUsage + item.getTotalDiskUsage();
+            totalDiskUsage += item.getTotalDiskUsage();
         }
+        return totalDiskUsage;
     }
 }

@@ -106,7 +106,9 @@ public abstract class SystemItem {
      * 			| result ==
      * 			|	(name != null) && name.matches("[a-zA-Z_0-9.-]+")
      */
-    protected abstract boolean isValidName(String name) ;
+    protected static boolean isValidName(String name){
+        return (name != null && name.matches("[a-zA-Z_0-9.-]+"));
+    };
 
     /**
      * Give the default name for the given item.
