@@ -27,12 +27,12 @@ public class FileTest {
 		rootDirectory = new RootDirectory("root", true);
 
 		timeBeforeConstruction = new Date();
-		fileStringIntBoolean = new File("bestand.txt",100, true, rootDirectory);
-		fileString = new File("bestand.txt", rootDirectory);
+		fileStringIntBoolean = new File("bestand.txt",100, true, rootDirectory, "java");
+		fileString = new File("bestand.txt", rootDirectory, "java");
 		timeAfterConstruction = new Date();
 
 		timeBeforeConstructionNotWritable = new Date();
-		fileNotWritable = new File("bestand.txt",100,false, rootDirectory);
+		fileNotWritable = new File("bestand.txt",100,false, rootDirectory, "java");
 		timeAfterConstructionNotWritable = new Date();
 	}
 
@@ -49,7 +49,7 @@ public class FileTest {
 	@Test
 	public void testFileStringIntBoolean_IllegalCase() {
 		timeBeforeConstruction = new Date();
-		fileStringIntBoolean = new File("$IllegalName$",File.getMaximumSize(),false, rootDirectory);
+		fileStringIntBoolean = new File("$IllegalName$",File.getMaximumSize(),false, rootDirectory, "java");
 		timeAfterConstruction = new Date();
 		assertTrue(WritableItem.isValidName(fileStringIntBoolean.getName()));
 		assertEquals(File.getMaximumSize(),fileStringIntBoolean.getSize());
@@ -72,7 +72,7 @@ public class FileTest {
 	@Test
 	public void testFileString_IllegalCase() {
 		timeBeforeConstruction = new Date();
-		fileString = new File("$IllegalName$", rootDirectory);
+		fileString = new File("$IllegalName$", rootDirectory, "java");
 		timeAfterConstruction = new Date();
 		assertTrue(WritableItem.isValidName(fileString.getName()));
 		assertEquals(0,fileString.getSize());
@@ -136,7 +136,7 @@ public class FileTest {
 
 	@Test
 	public void testEnlarge_LegalCase() {
-		File file = new File("bestand.txt",File.getMaximumSize()-1,true, rootDirectory);
+		File file = new File("bestand.txt",File.getMaximumSize()-1,true, rootDirectory, "java");
 		Date timeBeforeEnlarge = new Date();
 		file.enlarge(1);
 		Date timeAfterEnlarge = new Date();		
@@ -194,9 +194,9 @@ public class FileTest {
 	@Test
 	public void testHasOverlappingUsePeriod_UnmodifiedFiles() {
 		// one = implicit argument ; other = explicit argument
-		File one = new File("one", rootDirectory);
+		File one = new File("one", rootDirectory, "java");
 		sleep(); // sleep() to be sure that one.getCreationTime() != other.getCreationTime()
-		File other = new File("other", rootDirectory);
+		File other = new File("other", rootDirectory, "java");
 		
 		//1 Test unmodified case
 		assertFalse(one.hasOverlappingUsePeriod(other));
@@ -207,7 +207,7 @@ public class FileTest {
 		
 		//3 Test other unmodified case
 		//so re-initialise the other file
-		other = new File("other", rootDirectory);
+		other = new File("other", rootDirectory, "java");
 		one.enlarge(File.getMaximumSize());
 		assertFalse(one.hasOverlappingUsePeriod(other));
 		
@@ -217,22 +217,22 @@ public class FileTest {
 	public void testHasOverlappingUsePeriod_ModifiedNoOverlap() {
 		// one = implicit argument ; other = explicit argument
 		File one, other;
-		one = new File("one", rootDirectory);
+		one = new File("one", rootDirectory, "java");
 		sleep(); // sleep() to be sure that one.getCreationTime() != other.getCreationTime()
-		other = new File("other", rootDirectory);
+		other = new File("other", rootDirectory, "java");
 		
 		//1 Test one created and modified before other created and modified case
 		one.enlarge(File.getMaximumSize());
         sleep();
         //re-initialise the other
-        other = new File("other", rootDirectory);
+        other = new File("other", rootDirectory, "java");
         other.enlarge(File.getMaximumSize());
 	    assertFalse(one.hasOverlappingUsePeriod(other));
 	    
 	    //2 Test other created and modified before one created and modified
 		other.enlarge(File.getMaximumSize());
         sleep();
-        one = new File("one", rootDirectory);
+        one = new File("one", rootDirectory, "java");
         one.enlarge(File.getMaximumSize());
         assertFalse(one.hasOverlappingUsePeriod(other));
 	
@@ -243,9 +243,9 @@ public class FileTest {
 		// one = implicit argument ; other = explicit argument
 		//A Test one created before other created before one modified before other modified
 	    File one, other;
-		one = new File("one", rootDirectory);
+		one = new File("one", rootDirectory, "java");
 		sleep(); // sleep() to be sure that one.getCreationTime() != other.getCreationTime()
-		other = new File("other", rootDirectory);
+		other = new File("other", rootDirectory, "java");
 	
 		one.enlarge(File.getMaximumSize());
         sleep();
@@ -258,9 +258,9 @@ public class FileTest {
 		// one = implicit argument ; other = explicit argument
 		//B Test one created before other created before other modified before one modified
        	File one, other;
-		one = new File("one", rootDirectory);
+		one = new File("one", rootDirectory, "java");
 		sleep(); // sleep() to be sure that one.getCreationTime() != other.getCreationTime()
-		other = new File("other", rootDirectory);
+		other = new File("other", rootDirectory, "java");
 	
 		other.enlarge(File.getMaximumSize());
         sleep();
@@ -273,9 +273,9 @@ public class FileTest {
 		// one = implicit argument ; other = explicit argument
 		//C Test other created before one created before other modified before one modified
         File one, other;
-		other = new File("other", rootDirectory);
+		other = new File("other", rootDirectory, "java");
 		sleep(); // sleep() to be sure that one.getCreationTime() != other.getCreationTime()
-		one = new File("one", rootDirectory);
+		one = new File("one", rootDirectory, "java");
 		
 		other.enlarge(File.getMaximumSize());
         sleep();
@@ -288,9 +288,9 @@ public class FileTest {
 		// one = implicit argument ; other = explicit argument
 		//D Test other created before one created before one modified before other modified
 		File one, other;
-		other = new File("one", rootDirectory);
+		other = new File("one", rootDirectory, "java");
 		sleep(); // sleep() to be sure that one.getCreationTime() != other.getCreationTime()
-		one = new File("other", rootDirectory);
+		one = new File("other", rootDirectory, "java");
 	
 		one.enlarge(File.getMaximumSize());
         sleep();

@@ -59,9 +59,10 @@ public class File extends WritableItem {
      * 			thus the object is in a raw state upon entry of the constructor.
      */
 	@Raw
-	public File(String name, int size, boolean writable, Directory directory) {
+	public File(String name, int size, boolean writable, Directory directory, String extension) {
         super(name, directory, writable);
         setSize(size);
+        setExtension(extension);
     }
 
     /**
@@ -74,8 +75,8 @@ public class File extends WritableItem {
      *         | this(name,0,true)
      */
 	@Raw
-    public File(String name, Directory directory) {
-        this(name,0,true, directory);
+    public File(String name, Directory directory, String extension) {
+        this(name,0,true, directory, extension);
     }
     
     
@@ -156,6 +157,19 @@ public class File extends WritableItem {
         }
     }
 
+    /**
+     * Set the extension of the file to the given extension.
+     *
+     * @param   extension
+     *          The extension of the file.
+     * @post    If the given extension is valid,
+     *          the extension type of this file is set to the extension,
+     *          otherwise the type of the file is set to a valid type (default).
+     *          | if (isValidExtension(extension)
+     *          |       then new.getExtension().equals(extension)
+     *          |       else new.getExtension().equals(getDefaultExtension())
+     */
+    @Raw @Model
     private void setExtension(String extension) {
         if (isValidExtension(extension)) {
             this.extension = extension;
