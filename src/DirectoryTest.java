@@ -22,7 +22,7 @@ public class DirectoryTest {
 
         testDirectory = new Directory("testDirectory", rootDirectory, true);
 
-        testFile = new File("testFile", 50, true, testDirectory);
+        testFile = new File("testFile", 50, true, testDirectory, "java");
     }
 
     @Test
@@ -48,13 +48,6 @@ public class DirectoryTest {
     public void testDirectoryDefaultItems(){
         Directory emptyTestDirectory = new Directory("emptyTestDirectory", rootDirectory, true);
         assertEquals(new ArrayList<>(), emptyTestDirectory.getItems());
-    }
-
-    @Test
-    public void testDirectoryAddItem(){
-        assertEquals(rootDirectory, testDirectory.getDirectory());
-        assertEquals(testDirectory, testFile.getDirectory());
-
     }
 
     @Test
