@@ -191,6 +191,8 @@ public abstract class Directory extends WritableItem{
      *         | !sWritable()
      * @effect Set the directory of the given item to this.
      *         | item.setDirectory(this)
+     * @effect The item is added to the directory in alphabetic order.
+     *       | addItemAlphabetic(item)
      */
     public void addItem(SystemItem item){
         if (!isWritable){
@@ -199,8 +201,48 @@ public abstract class Directory extends WritableItem{
         if (!isValidAddItem(item)){
             throw new IllegalActionException(item);
         }
-        items.add(item);
+        addItemAlphabetic(item);
         item.setDirectory(this);
+    }
+
+    /**
+     * Add an item to this directory in alphabetic order.
+     * @param inputItem
+     *        The item we want to add to this directory.
+     * @post The item is added to this directory in alphabetic order.
+     */
+    protected void addItemAlphabetic(SystemItem inputItem){
+        int index = 0;
+
+        //Make a list with characters of the inputItem name.
+        char[] chInput = new char[inputItem.getName().length()];
+        for (int i = 0; i < inputItem.getName().length(); i++){
+            chInput[i] = inputItem.getName().charAt(i);
+        }
+
+        for (int m = 0; m < items.size(); m++){
+            SystemItem item = (SystemItem) getItems().get(m);
+
+            //Make a list with characters of an item from this.items
+            char[] chItem = new char[inputItem.getName().length()];
+            for (int i = 0; i < item.getName().length(); i++){
+                chItem[i] = item.getName().charAt(i);
+            }
+
+            //Compare the letters and put in the list where needed
+            for (int j = 0; j < inputItem.getName().length(); j++){
+                if (j >= item.getName().length()){
+                    items.add(index, inputItem);
+                }
+                else if (chInput[j] < chItem[j]){
+                    items.add(index, inputItem);
+                }
+                else if (chInput[j] > chItem[j]){
+                    index ++;
+                    j = inputItem.getName().length() + 1; //This will break the for loop.
+                }
+            }
+        }
     }
 
     /**
