@@ -24,8 +24,13 @@ public class RootDirectory extends Directory{
      * @return true if and only if the given directory is null.
      *        | result == (directory == null)
      */
+    @Override
     public boolean canHaveAsDirectory(Directory directory){
         return directory == null;
     }
 
+    @Override
+    public void setDirectory(Directory directory){
+        this.directory = null;
+    }
 }

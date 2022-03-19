@@ -49,8 +49,9 @@ public abstract class SystemItem {
      */
     @Raw @Basic
     public void setDirectory(Directory directory){
-        if (canHaveAsDirectory(directory)) {
+        if (directory.isValidAddItem(this)) {
             this.directory = directory;
+            directory.addItem(this);
         }
     }
 
@@ -106,9 +107,9 @@ public abstract class SystemItem {
      * 			| result ==
      * 			|	(name != null) && name.matches("[a-zA-Z_0-9.-]+")
      */
-    protected static boolean isValidName(String name){
+    public static boolean isValidName(String name){
         return (name != null && name.matches("[a-zA-Z_0-9.-]+"));
-    };
+    }
 
     /**
      * Give the default name for the given item.

@@ -9,7 +9,7 @@ import org.junit.*;
  * @author  Arthur Cremelie
  * @author  Matias Daneels
  * @author  Eva Haanen
- *
+ * @version	1.0
  */
 public class FileTest {
 
@@ -20,7 +20,7 @@ public class FileTest {
 	File fileNotWritable;
 	Date timeBeforeConstructionNotWritable, timeAfterConstructionNotWritable;
 
-	Directory rootDirectory;
+	RootDirectory rootDirectory;
 	
 	@Before
 	public void setUpFixture(){
@@ -89,9 +89,9 @@ public class FileTest {
 
 	@Test
 	public void testIsValidName_IllegalCase() {
-		assertFalse(WritableItem.isValidName(null));
-		assertFalse(WritableItem.isValidName(""));
-		assertFalse(WritableItem.isValidName("%illegalSymbol"));
+		assertFalse(File.isValidName(null));
+		assertFalse(File.isValidName(""));
+		assertFalse(File.isValidName("%illegalSymbol"));
 		
 	}
 
@@ -106,7 +106,7 @@ public class FileTest {
 		assertFalse(fileString.getModificationTime().before(timeBeforeSetName));
 		assertFalse(timeAfterSetName.before(fileString.getModificationTime()));
 	}
-	
+
 	@Test (expected = FileNotWritableException.class)
 	public void testChangeName_FileNotWritable() {
 		fileNotWritable.changeName("NewLegalName");

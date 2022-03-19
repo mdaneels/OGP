@@ -1,3 +1,4 @@
+import be.kuleuven.cs.som.annotate.Model;
 import be.kuleuven.cs.som.annotate.Raw;
 
 import java.util.*;
@@ -8,7 +9,7 @@ import java.util.*;
  * @author Matias Daneels
  * @version 1.0
  */
-public abstract class Directory extends WritableItem{
+public class Directory extends WritableItem{
 
     /**
      * List containing all the items that are in the directory.
@@ -136,6 +137,27 @@ public abstract class Directory extends WritableItem{
     }
 
     /**
+     * Set the name of this item to the given name.
+     *
+     * @param   name
+     * 			The new name for this item.
+     * @post    If the given name is valid, the name of
+     *          this item is set to the given name,
+     *          otherwise the name of the item is set to a valid name (the default).
+     *          | if (isValidName(name))
+     *          |      then new.getName().equals(name)
+     *          |      else new.getName().equals(getDefaultName())
+     */
+    @Raw @Model @Override
+    protected void setName(String name) {
+        if (isValidName(name)) {
+            this.name = name;
+        } else {
+            this.name = getDefaultName();
+        }
+    }
+
+    /**
      * Return whether the inputItem is in this directory or not. This method also check if the inputItem is in
      * directories in this directory and further.
      *
@@ -144,14 +166,16 @@ public abstract class Directory extends WritableItem{
      *        | result == inputItem in getItems()
      */
     public boolean hasAsItem(SystemItem inputItem){
-        for (SystemItem item: items){
-            if (item instanceof Directory){
-                if ( ((Directory)item).hasAsItem(inputItem)){
+        if (items != null) {
+            for (SystemItem item : items) {
+                if (item instanceof Directory) {
+                    if (((Directory) item).hasAsItem(inputItem)) {
+                        return true;
+                    }
+                }
+                if (item == inputItem) {
                     return true;
                 }
-            }
-            if (item == inputItem){
-                return true;
             }
         }
         return false;
@@ -197,9 +221,6 @@ public abstract class Directory extends WritableItem{
     public void addItem(SystemItem item){
         if (!isWritable){
             throw new NotRightAccesRightsException(this);
-        }
-        if (!isValidAddItem(item)){
-            throw new IllegalActionException(item);
         }
         addItemAlphabetic(item);
         item.setDirectory(this);
