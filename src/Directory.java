@@ -192,7 +192,8 @@ public class Directory extends WritableItem{
      *       | items.remove(item)
      */
     protected void remove(SystemItem item){
-        if (!getItems().contains(item)){
+        System.out.print(getItems());
+        if (!(getItems().contains(item))){
             throw new IllegalActionException(item);
         }
         items.remove(item);
@@ -239,8 +240,7 @@ public class Directory extends WritableItem{
         if (!isWritable){
             throw new NotRightAccesRightsException(this);
         }
-        addItemAlphabetic(item);
-        item.setDirectory(this);
+        items.add(item); // Add this way cause alphabetic does not work yet
     }
 
     /**

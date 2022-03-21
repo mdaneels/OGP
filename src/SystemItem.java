@@ -50,8 +50,8 @@ public abstract class SystemItem {
     @Raw @Basic
     public void setDirectory(Directory directory){
         if (directory.isValidAddItem(this)) {
-            this.directory = directory;
             directory.addItem(this);
+            this.directory = directory;
         }
     }
 
@@ -152,6 +152,7 @@ public abstract class SystemItem {
         if (this instanceof RootDirectory) {
             throw new IllegalActionException(this);
         }
+        System.out.println(this.getDirectory().getName());
         getDirectory().remove(this);
         setDirectory(directory);
         directory.addItem(this);
