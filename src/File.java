@@ -1,9 +1,6 @@
 import be.kuleuven.cs.som.annotate.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * A class of files.
