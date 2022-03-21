@@ -154,6 +154,7 @@ public abstract class SystemItem {
         }
         getDirectory().remove(this);
         setDirectory(directory);
+        directory.addItem(this);
     }
 
     public RootDirectory getRoot(){
