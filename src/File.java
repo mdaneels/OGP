@@ -101,13 +101,6 @@ public class File extends WritableItem {
      */
     private Type extension = null;
 
-    /**
-     * Variable referencing the list of possible types of extensions.
-     */
-    private static final List<String> extensions = new ArrayList<String>(
-            Arrays.asList("txt", "pdf", "java")
-    );
-
     
     /**
      * Return the name for a new file which is to be used when the
@@ -129,8 +122,8 @@ public class File extends WritableItem {
      *         | isValidExtension(result)
      */
     @Model
-    public String getDefaultExtension() {
-        return extensions.get(0);
+    public Type getDefaultExtension() {
+        return Type.values()[0];
     }
 
     /**
@@ -178,6 +171,11 @@ public class File extends WritableItem {
     private void setExtension(Type extension) {
         this.extension = extension;
     }
+
+    public Type getExtension() {
+        return extension;
+    }
+
 
     /**********************************************************
      * size - nominal programming

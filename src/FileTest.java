@@ -27,18 +27,18 @@ public class FileTest {
 		rootDirectory = new RootDirectory("root", true);
 
 		timeBeforeConstruction = new Date();
-		fileStringIntBoolean = new File("bestand.txt",100, true, rootDirectory, Type.JAVA);
-		fileString = new File("bestand.txt", rootDirectory, Type.JAVA);
+		fileStringIntBoolean = new File("bestand",100, true, rootDirectory, Type.JAVA);
+		fileString = new File("bestand", rootDirectory, Type.JAVA);
 		timeAfterConstruction = new Date();
 
 		timeBeforeConstructionNotWritable = new Date();
-		fileNotWritable = new File("bestand.txt",100,false, rootDirectory, Type.JAVA);
+		fileNotWritable = new File("bestand",100,false, rootDirectory, Type.JAVA);
 		timeAfterConstructionNotWritable = new Date();
 	}
 
 	@Test
 	public void testFileStringIntBoolean_LegalCase() {
-		assertEquals("bestand.txt",fileStringIntBoolean.getName());
+		assertEquals("bestand",fileStringIntBoolean.getName());
 		assertEquals(fileStringIntBoolean.getSize(),100);
 		assertTrue(fileStringIntBoolean.isWritable());
 		assertNull(fileStringIntBoolean.getModificationTime());
@@ -61,7 +61,7 @@ public class FileTest {
 
 	@Test
 	public void testFileString_LegalCase() {
-		assertEquals("bestand.txt",fileString.getName());
+		assertEquals("bestand",fileString.getName());
 		assertEquals(0,fileString.getSize());
 		assertTrue(fileString.isWritable());
 		assertNull(fileString.getModificationTime());
@@ -115,7 +115,7 @@ public class FileTest {
 	@Test
 	public void testChangeName_IllegalName() {
 		fileString.changeName("$IllegalName$");
-		assertEquals("bestand.txt",fileString.getName());
+		assertEquals("bestand",fileString.getName());
 		assertNull(fileString.getModificationTime());
 	}
 
@@ -136,7 +136,7 @@ public class FileTest {
 
 	@Test
 	public void testEnlarge_LegalCase() {
-		File file = new File("bestand.txt",File.getMaximumSize()-1,true, rootDirectory, Type.JAVA);
+		File file = new File("bestand",File.getMaximumSize()-1,true, rootDirectory, Type.JAVA);
 		Date timeBeforeEnlarge = new Date();
 		file.enlarge(1);
 		Date timeAfterEnlarge = new Date();		
@@ -304,6 +304,12 @@ public class FileTest {
 		fileNotWritable.setWritable(true);
 		assertFalse(fileString.isWritable());
 		assertTrue(fileNotWritable.isWritable());
+	}
+
+	@Test
+	public void testSetExtension_LegalCase() {
+		assertEquals(Type.JAVA, fileStringIntBoolean.getExtension());
+		assertNotEquals(Type.PDF, fileStringIntBoolean.getExtension());
 	}
 	
 	private void sleep() {
