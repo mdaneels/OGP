@@ -22,7 +22,7 @@ public class DirectoryTest {
 
         testDirectory1 = new Directory("testDirectory1", rootDirectory, true);
 
-        testFile1 = new File("testFile1", 50, true, testDirectory1, "java");
+        testFile1 = new File("testFile1", 50, true, testDirectory1, Type.JAVA);
     }
 
     @Test

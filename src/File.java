@@ -39,6 +39,10 @@ public class File extends WritableItem {
      *         	The size of the new file.
      * @param  	writable
      *         	The writability of the new file.
+     * @param   directory
+     *          The directory of the new file.
+     * @param   extension
+     *          The extension of the new file.
      * @effect  The name of the file is set to the given name.
      * 			If the given name is not valid, a default name is set.
      *          | setName(name)
@@ -46,6 +50,7 @@ public class File extends WritableItem {
      * 			| setSize(size)
      * @effect	The writability is set to the given flag
      * 			| setWritable(writable)
+     * 			
      * @post    The new creation time of this file is initialized to some time during
      *          constructor execution.
      *          | (new.getCreationTime().getTime() >= System.currentTimeMillis()) &&
@@ -59,7 +64,7 @@ public class File extends WritableItem {
      * 			thus the object is in a raw state upon entry of the constructor.
      */
 	@Raw
-	public File(String name, int size, boolean writable, Directory directory, String extension) {
+	public File(String name, int size, boolean writable, Directory directory, Type extension) {
         super(name, directory, writable);
         setSize(size);
         setExtension(extension);
@@ -75,7 +80,7 @@ public class File extends WritableItem {
      *         | this(name,0,true)
      */
 	@Raw
-    public File(String name, Directory directory, String extension) {
+    public File(String name, Directory directory, Type extension) {
         this(name,0,true, directory, extension);
     }
     
@@ -94,7 +99,7 @@ public class File extends WritableItem {
     /**
      * Variable referencing the extension of this file.
      */
-    private String extension = null;
+    private Type extension = null;
 
     /**
      * Variable referencing the list of possible types of extensions.
@@ -170,24 +175,8 @@ public class File extends WritableItem {
      *          |       else new.getExtension().equals(getDefaultExtension())
      */
     @Raw @Model
-    private void setExtension(String extension) {
-        if (isValidExtension(extension)) {
+    private void setExtension(Type extension) {
             this.extension = extension;
-        } else {
-            this.extension = getDefaultExtension();
-        }
-    }
-
-    /**
-     * Check whether the given extension is a legal extension for a file, given the list of possible extensions.
-     *
-     * @param   extension
-     *          The extension to be checked.
-     * @return  True if the given extension is found in the list of possible extensions.
-     *          | extensions.contains(extension)
-     */
-    public static boolean isValidExtension(String extension) {
-        return extensions.contains(extension);
     }
 
 
