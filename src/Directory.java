@@ -192,7 +192,6 @@ public class Directory extends WritableItem{
      *       | items.remove(item)
      */
     protected void remove(SystemItem item){
-        System.out.print(getItems());
         if (!(getItems().contains(item))){
             throw new IllegalActionException(item);
         }
@@ -256,7 +255,9 @@ public class Directory extends WritableItem{
         char[] chInput = new char[inputItem.getName().length()];
         for (int i = 0; i < inputItem.getName().length(); i++){
             chInput[i] = inputItem.getName().charAt(i);
+            System.out.println("add character");
         }
+        System.out.println(chInput);
 
         for (int m = 0; m < items.size(); m++){
             SystemItem item = (SystemItem) getItems().get(m);
