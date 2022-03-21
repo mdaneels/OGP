@@ -65,7 +65,6 @@ public abstract class SystemItem {
         return true;
     }
 
-
     // MOET ANDERS VOOR ROOT WANT DAAR KAN DIRECTORY WEL NULL ZIJN! IK ZOU  CANHAVEASDIRECTORY AANPASSEN IN ROOT
     public boolean hasProperDirectory() {
         return (canHaveAsDirectory(directory) && (directory.hasAsItem(this)));
@@ -145,6 +144,7 @@ public abstract class SystemItem {
         return(Objects.equals(getName(), item.getName()));
     }
 
+    @Raw
     public void move(Directory directory){
         if (!canHaveAsDirectory(directory)) {
             throw new IllegalArgumentException("Invalid directory!");
@@ -152,6 +152,7 @@ public abstract class SystemItem {
         if (this instanceof RootDirectory) {
             throw new IllegalActionException(this);
         }
+        getDirectory().remove(this);
         setDirectory(directory);
         directory.addItem(this);
     }
@@ -160,20 +161,11 @@ public abstract class SystemItem {
         if (this instanceof RootDirectory){
             return (RootDirectory) this;
         }
-        Directory parent = directory;
-        return parent.getRoot();
+        return getDirectory().getRoot();
     }
 
     public boolean isDirectOrIndirectChildOf(Directory directory){
-        Directory parent = this.directory;
-        if (parent == directory){
-            return true;
-        }
-        if (!(parent instanceof RootDirectory)){
-            return isDirectOrIndirectChildOf(parent);
-        }
-        return false;
-
+        return directory.hasAsItem(this);
     }
 
     public abstract  int getTotalDiskUsage();

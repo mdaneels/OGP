@@ -182,6 +182,23 @@ public class Directory extends WritableItem{
     }
 
     /**
+     * Remove an item from its directory.
+     * @param item
+     *        The item we want to remove out of this directory.
+     * @throws IllegalActionException
+     *         If the item is not in this directory.
+     *         | !(items.contains(item))
+     * @post The item is removed from this directory.
+     *       | items.remove(item)
+     */
+    protected void remove(SystemItem item){
+        if (!getItems().contains(item)){
+            throw new IllegalActionException(item);
+        }
+        items.remove(item);
+    }
+
+    /**
      * Return a list of the items in this directory, this is list is in alphabetic order.
      */
     public List getItems(){
