@@ -169,7 +169,7 @@ public class File extends WritableItem {
      */
     @Raw @Model
     private void setExtension(Type extension) {
-            this.extension = extension;
+        this.extension = extension;
     }
 
     public Type getExtension() {

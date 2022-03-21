@@ -13,35 +13,53 @@ import static org.junit.Assert.*;
 public class DirectoryTest {
 
     RootDirectory rootDirectory;
-    Directory testDirectory;
-    File testFile;
+    Directory testDirectory1;
+    File testFile1;
 
     @Before
     public void setUpFixture(){
         rootDirectory = new RootDirectory("root", true);
 
-        testDirectory = new Directory("testDirectory", rootDirectory, true);
+        testDirectory1 = new Directory("testDirectory1", rootDirectory, true);
 
-        testFile = new File("testFile", 50, true, testDirectory, Type.JAVA);
+        testFile1 = new File("testFile1", 50, true, testDirectory1, Type.JAVA);
+    }
+
+    @Test
+    public void testRootDirectoryValidName(){
+        assertTrue(RootDirectory.isValidName("validName123_-"));
+        assertFalse(RootDirectory.isValidName(".invalidName123."));
     }
 
     @Test
     public void testDirectoryValidName(){
-        //Test will fail
-        //Still problems with isValidName method
-        //Cannot override for some reason
-        assertEquals("root", rootDirectory.getName());
-        rootDirectory.setName("validName");
-        assertEquals("validName", rootDirectory.getName());
-        rootDirectory.setName(".invalidName.");
-        assertEquals("new_root_directory", rootDirectory.getName());
+        assertTrue(Directory.isValidName("validName123_-"));
+        assertFalse(Directory.isValidName(".invalidName123."));
+    }
+
+
+    @Test
+    public void testDirectoryValidNameConstructor(){
+        Directory testDirectory2 = new Directory(".invalidName.", rootDirectory, true);
+        assertEquals("new_directory", testDirectory2.getName());
+        Directory testDirectory3 = new Directory("validName123_-", rootDirectory, true);
+        assertEquals("validName123_-", testDirectory3.getName());
+    }
+
+
+    @Test
+    public void testRootDirectoryValidNameConstructor(){
+        RootDirectory testRootDirectory2 = new RootDirectory(".invalidName.", true);
+        assertEquals("new_root_directory", testRootDirectory2.getName());
+        RootDirectory testRootDirectory3 = new RootDirectory("validName123_-", true);
+        assertEquals("validName123_-", testRootDirectory3.getName());
     }
 
     @Test
     public void testDirectorySetWritable(){
-        assertTrue(testDirectory.isWritable());
-        testDirectory.setWritable(false);
-        assertFalse(testDirectory.isWritable());
+        assertTrue(testDirectory1.isWritable());
+        testDirectory1.setWritable(false);
+        assertFalse(testDirectory1.isWritable());
     }
 
     @Test
@@ -52,6 +70,8 @@ public class DirectoryTest {
 
     @Test
     public void testDirectoryMoveItem(){
-
+        Directory testDirectory2 = new Directory("testDirectory2", rootDirectory, true);
+        testFile1.move(testDirectory2);
+        assertTrue(testDirectory2.getItems().contains(testFile1));
     }
 }
