@@ -192,7 +192,6 @@ public class Directory extends WritableItem{
      *       | items.remove(item)
      */
     protected void remove(SystemItem item){
-        System.out.print(getItems());
         if (!(getItems().contains(item))){
             throw new IllegalActionException(item);
         }

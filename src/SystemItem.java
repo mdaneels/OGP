@@ -152,7 +152,6 @@ public abstract class SystemItem {
         if (this instanceof RootDirectory) {
             throw new IllegalActionException(this);
         }
-        System.out.println(this.getDirectory().getName());
         getDirectory().remove(this);
         setDirectory(directory);
         directory.addItem(this);
