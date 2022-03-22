@@ -27,14 +27,14 @@ public class DirectoryTest {
 
     @Test
     public void testRootDirectoryValidName(){
-        assertTrue(RootDirectory.isValidName("validName123_-"));
-        assertFalse(RootDirectory.isValidName(".invalidName123."));
+        assertTrue(rootDirectory.isValidName("validName123_-"));
+        assertFalse(rootDirectory.isValidName(".invalidName123."));
     }
 
     @Test
     public void testDirectoryValidName(){
-        assertTrue(Directory.isValidName("validName123_-"));
-        assertFalse(Directory.isValidName(".invalidName123."));
+        assertTrue(testDirectory1.isValidName("validName123_-"));
+        assertFalse(testDirectory1.isValidName(".invalidName123."));
     }
 
 
@@ -73,5 +73,15 @@ public class DirectoryTest {
         Directory testDirectory2 = new Directory("testDirectory2", rootDirectory, true);
         testFile1.move(testDirectory2);
         assertTrue(testDirectory2.getItems().contains(testFile1));
+        assertFalse(testDirectory1.getItems().contains(testFile1));
+    }
+
+    @Test
+    public void testDirectoryIsValidIndex(){
+        // rootDirectory has 1 item, see @Before
+        assertTrue(rootDirectory.isValidIndex(1));
+        assertTrue(rootDirectory.isValidIndex(0));
+        assertFalse(rootDirectory.isValidIndex(2));
+        assertFalse(rootDirectory.isValidIndex(69));
     }
 }
