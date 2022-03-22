@@ -145,12 +145,7 @@ public class File extends WritableItem {
      *
      * @param   extension
      *          The extension of the file.
-     * @post    If the given extension is valid,
-     *          the extension type of this file is set to the extension,
-     *          otherwise the type of the file is set to a valid type (default).
-     *          | if (isValidExtension(extension)
-     *          |       then new.getExtension().equals(extension)
-     *          |       else new.getExtension().equals(getDefaultExtension())
+     * @post    The file will have an extension from enumeration Type.
      */
     @Raw @Model
     private void setExtension(Type extension) {
