@@ -112,18 +112,6 @@ public class File extends WritableItem {
     }
 
     /**
-     * Return the extension for a new file which is to be used when the
-     * given extension is not valid.
-     *
-     * @return   A valid file extension.
-     *         | isValidExtension(result)
-     */
-    @Model
-    public Type getDefaultExtension() {
-        return Type.values()[0];
-    }
-
-    /**
      * Change the name of this file to the given name.
      *
      * @param	name
