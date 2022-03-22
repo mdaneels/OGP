@@ -51,7 +51,7 @@ public class FileTest {
 		timeBeforeConstruction = new Date();
 		fileStringIntBoolean = new File("$IllegalName$",File.getMaximumSize(),false, rootDirectory, Type.JAVA);
 		timeAfterConstruction = new Date();
-		assertTrue(WritableItem.isValidName(fileStringIntBoolean.getName()));
+		assertTrue(fileStringIntBoolean.isValidName(fileStringIntBoolean.getName()));
 		assertEquals(File.getMaximumSize(),fileStringIntBoolean.getSize());
 		assertFalse(fileStringIntBoolean.isWritable());
 		assertNull(fileStringIntBoolean.getModificationTime());
@@ -74,7 +74,7 @@ public class FileTest {
 		timeBeforeConstruction = new Date();
 		fileString = new File("$IllegalName$", rootDirectory, Type.JAVA);
 		timeAfterConstruction = new Date();
-		assertTrue(WritableItem.isValidName(fileString.getName()));
+		assertTrue(fileString.isValidName(fileString.getName()));
 		assertEquals(0,fileString.getSize());
 		assertTrue(fileString.isWritable());
 		assertNull(fileString.getModificationTime());
@@ -84,14 +84,14 @@ public class FileTest {
 
 	@Test
 	public void testIsValidName_LegalCase() {
-		assertTrue(WritableItem.isValidName("abcDEF123-_."));
+		assertTrue(fileString.isValidName("abcDEF123-_."));
 	}
 
 	@Test
 	public void testIsValidName_IllegalCase() {
-		assertFalse(File.isValidName(null));
-		assertFalse(File.isValidName(""));
-		assertFalse(File.isValidName("%illegalSymbol"));
+		assertFalse(fileString.isValidName(null));
+		assertFalse(fileString.isValidName(""));
+		assertFalse(fileString.isValidName("%illegalSymbol"));
 		
 	}
 

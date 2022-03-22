@@ -137,27 +137,6 @@ public class Directory extends WritableItem{
     }
 
     /**
-     * Set the name of this item to the given name.
-     *
-     * @param   name
-     * 			The new name for this item.
-     * @post    If the given name is valid, the name of
-     *          this item is set to the given name,
-     *          otherwise the name of the item is set to a valid name (the default).
-     *          | if (isValidName(name))
-     *          |      then new.getName().equals(name)
-     *          |      else new.getName().equals(getDefaultName())
-     */
-    @Raw @Model @Override
-    protected void setName(String name) {
-        if (isValidName(name)) {
-            this.name = name;
-        } else {
-            this.name = getDefaultName();
-        }
-    }
-
-    /**
      * Return whether the inputItem is in this directory or not. This method also check if the inputItem is in
      * directories in this directory and further.
      *
@@ -216,7 +195,8 @@ public class Directory extends WritableItem{
      * 			| result ==
      * 			|	(name != null) && name.matches("[a-zA-Z_0-9-]+")
      */
-    public static boolean isValidName(String name) {
+    @Override
+    public boolean isValidName(String name) {
         return (name != null && name.matches("[a-zA-Z_0-9-]+"));
     }
 
