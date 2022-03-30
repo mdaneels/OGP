@@ -34,6 +34,7 @@ public class Link extends SystemItem {
         return "new_link";
     }
 
+
     @Override
     public int getTotalDiskUsage() {
         return 0;

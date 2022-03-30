@@ -146,8 +146,20 @@ public abstract class SystemItem {
         return(Objects.equals(getName(), item.getName()));
     }
 
-    @Raw
-    public void move(Directory directory){
+    /**
+     * Moves this item to the given directory
+     * @param directory
+     *        the directory the file needs te be placed in
+     * @throws IllegalArgumentException
+     *         The given directory must be a valid directry
+     *         | !canHaveAsDirectory(directory)
+     * @throws IllegalActionException
+     *          The item can't be a  RootDirectory
+     *         | (this instanceof RootDirectory)
+     * @effect The item is placed into the given directory.
+     *          | setDirectory(directory) && directory.addItem(this)
+     */
+    public void move(Directory directory) throws IllegalArgumentException, IllegalActionException {
         if (!canHaveAsDirectory(directory)) {
             throw new IllegalArgumentException("Invalid directory!");
         }
@@ -159,16 +171,55 @@ public abstract class SystemItem {
         directory.addItem(this);
     }
 
-    public RootDirectory getRoot(){
-        if (this instanceof RootDirectory){
-            return (RootDirectory) this;
+    /**
+     * The root directory of the item is given
+     * @return this if the item is a root directory
+     *         if this isn't a root directory, the root directory of the item's directory is given.
+     *          | if (getDirectory() == null)
+     *          |   result == this
+     *          | else
+     *          |   result == getDirectory().getRoot()
+     */
+    public SystemItem getRoot(){
+        if (directory == null){
+            return this;
         }
-        return getDirectory().getRoot();
+        Directory parent = directory;
+        return parent.getRoot();
     }
 
+    /**
+     * Returns if a given directory is an indirect or direct parent directory of the item
+     * @param directory
+     *        the directory needed to be checked if it is a parent directory of the item
+     * @return true if the directory of the item is equal to the given directory
+     *         (the item is a direct child of the given directory)
+     *         true if the directory of the item is a direct or indirect child of the given directory
+     *         (the item is an indirect child of the given directory)
+     *         false if the item is not related to the given directory
+     *         | if (getDirectory() == directory)
+     *         |    result == true
+     *         | if (!(getDirectory() == directory))
+     *         |    result == getDirectory().isDirectOrIndirectChildOf(directory)
+     *         | else
+     *         |    result == false
+     *
+     */
     public boolean isDirectOrIndirectChildOf(Directory directory){
-        return directory.hasAsItem(this);
+        Directory parent = this.directory;
+
+        if (parent == directory){
+            return true;
+        }
+        if (!(parent.getDirectory() == null)){
+            return parent.isDirectOrIndirectChildOf(directory);
+        }
+        return false;
+
     }
 
+    /**
+     * Returns the total disk usage of the directory
+     */
     public abstract  int getTotalDiskUsage();
 }
