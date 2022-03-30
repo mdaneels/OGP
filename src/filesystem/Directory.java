@@ -289,8 +289,10 @@ public class Directory extends WritableItem{
     }
 
     /**
-     * Get the total disk usage of this directory.
-     * @return The total disk usage of this directory.
+     * Returns the total disk usage of the directory
+     * @return the sum of the total disk usages of all the items in the directory
+     *         | for each item in this.getItems()
+     *         |    result == result + item.getTotalDiskUsage()
      */
     @Override
     public int getTotalDiskUsage(){
