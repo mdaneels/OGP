@@ -1,4 +1,5 @@
-import be.kuleuven.cs.som.annotate.Model;
+package filesystem;
+
 import be.kuleuven.cs.som.annotate.Raw;
 
 import java.util.*;
@@ -75,7 +76,7 @@ public class Directory extends WritableItem{
 
     /**
      * If there is an item in this directory with the same name as given, return this item. itemName is case-sensitive.
-     * If there is not such item in this directory, throw NotInMapException.
+     * If there is not such item in this directory, throw filesystem.NotInMapException.
      *
      * @param itemName The name of the item we want to find in this directory.
      * @return item
@@ -115,7 +116,7 @@ public class Directory extends WritableItem{
     }
 
     /**
-     * If the item is in this directory, give the index, if not throw NotInMapException.
+     * If the item is in this directory, give the index, if not throw filesystem.NotInMapException.
      *
      * @param inputItem The item we want the index of.
      * @return The index of the inputItem in this directory.
@@ -269,7 +270,7 @@ public class Directory extends WritableItem{
      * @param item
      *        The item we want to check if it is valid.
      * @return return false if the item is null, the item is already in a dictionary or this is in the item itself
-     * (only if item instanceof Directory). Else return true.
+     * (only if item instanceof filesystem.Directory). Else return true.
      *         | result == (item != null) && (item.getDirectory() == null) && !(item.hasAsItem(this))
      */
     protected boolean isValidAddItem(SystemItem item){

@@ -1,3 +1,5 @@
+package filesystem;
+
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Model;
 import be.kuleuven.cs.som.annotate.Raw;
@@ -20,7 +22,7 @@ public abstract class SystemItem {
     public String name = null;
 
     /**
-     * Directory where the item is in.
+     * filesystem.Directory where the item is in.
      */
     public Directory directory;
 
@@ -60,7 +62,7 @@ public abstract class SystemItem {
      */
     public boolean canHaveAsDirectory(Directory directory){
         if (directory == null){
-            throw new IllegalArgumentException("Directory cannot be null");
+            throw new IllegalArgumentException("filesystem.Directory cannot be null");
         }
         return true;
     }

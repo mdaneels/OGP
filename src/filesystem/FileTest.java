@@ -1,10 +1,12 @@
+package filesystem;
+
 import static org.junit.Assert.*;
 import java.util.Date;
 
 import org.junit.*;
 
 /**
- * A JUnit test class for testing the public methods of the File Class  
+ * A JUnit test class for testing the public methods of the filesystem.File Class
  * @author Tommy Messelis
  * @author  Arthur Cremelie
  * @author  Matias Daneels

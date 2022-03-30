@@ -1,3 +1,5 @@
+package filesystem;
+
 import be.kuleuven.cs.som.annotate.*;
 
 import java.util.Date;
@@ -145,7 +147,7 @@ public class File extends WritableItem {
      *
      * @param   extension
      *          The extension of the file.
-     * @post    The file will have an extension from enumeration Type.
+     * @post    The file will have an extension from enumeration filesystem.Type.
      */
     @Raw @Model
     private void setExtension(Type extension) {

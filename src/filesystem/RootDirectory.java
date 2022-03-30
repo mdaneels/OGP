@@ -1,5 +1,4 @@
-import be.kuleuven.cs.som.annotate.Basic;
-import be.kuleuven.cs.som.annotate.Raw;
+package filesystem;
 
 public class RootDirectory extends Directory{
 

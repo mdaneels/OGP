@@ -1,3 +1,5 @@
+package filesystem;
+
 /**
  * Enumeration containing the possible extensions.
  */

@@ -1,3 +1,5 @@
+package filesystem;
+
 public class NotRightAccesRightsException extends RuntimeException{
 
     final private Directory directory;

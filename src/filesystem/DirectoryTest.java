@@ -1,3 +1,5 @@
+package filesystem;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -6,7 +8,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 /**
- * A JUnit test class for testing the public methods of the Directory class
+ * A JUnit test class for testing the public methods of the filesystem.Directory class
  * @author Matias Daneels
  * @version 1.0
  */
