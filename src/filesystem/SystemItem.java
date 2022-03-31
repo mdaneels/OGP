@@ -45,16 +45,15 @@ public abstract class SystemItem {
      * Set the directory to the given directory.
      *
      * @param directory The directory we want to set our directory to.
-     * @throws IllegalArgumentException
-     *        The given directory is null.
-     *        | directory == null
      */
     @Raw @Basic
+
     public void setDirectory(Directory directory){
-        if (directory.isValidAddItem(this)) {
-            directory.addItem(this);
-            this.directory = directory;
+        if (! this.canHaveAsDirectory(directory)){
+            throw new IllegalArgumentException();
         }
+        this.directory = directory;
+
     }
 
     /**
@@ -219,7 +218,7 @@ public abstract class SystemItem {
     }
 
     /**
-     * Returns the total disk usage of the directory
+     * Returns the total disk usage of the directory.
      */
     public abstract  int getTotalDiskUsage();
 }

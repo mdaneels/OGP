@@ -208,7 +208,7 @@ public class Directory extends WritableItem{
      * @throws IllegalActionException
      *         If the item cannot be added to this directory.
      *         | !isValidAddItem(item)
-     * @throws NotRightAccesRightsException
+     * @throws AccessRightsException
      *         If writable is false.
      *         | !sWritable()
      * @effect Set the directory of the given item to this.
@@ -218,7 +218,7 @@ public class Directory extends WritableItem{
      */
     public void addItem(SystemItem item){
         if (!isWritable){
-            throw new NotRightAccesRightsException(this);
+            throw new AccessRightsException(this);
         }
         items.add(item); // Add this way cause alphabetic does not work yet
     }
@@ -274,16 +274,11 @@ public class Directory extends WritableItem{
      *         | result == (item != null) && (item.getDirectory() == null) && !(item.hasAsItem(this))
      */
     protected boolean isValidAddItem(SystemItem item){
-        if (item == null){
-            return false;
-        }
         if (item.getDirectory() != null){
             return false;
         }
         if (item instanceof Directory){
-            if (((Directory) item).hasAsItem(this)){
-                return false;
-            }
+            return !((Directory) item).hasAsItem(this);
         }
         return true;
     }
@@ -301,5 +296,14 @@ public class Directory extends WritableItem{
             totalDiskUsage += item.getTotalDiskUsage();
         }
         return totalDiskUsage;
+    }
+
+    public void makeRoot() {
+        if (!isWritable()) {
+            throw new AccessRightsException(this);
+        }
+        Directory parent = directory;
+        parent.remove(this);
+        this.setDirectory(null);
     }
 }
