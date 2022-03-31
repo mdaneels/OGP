@@ -8,25 +8,55 @@ import java.util.*;
  * Class representing a directory, having a list of items.
  *
  * @author Matias Daneels
+ * @author Arthur Cremelie
  * @version 1.0
  */
 public class Directory extends WritableItem{
 
     /**
      * List containing all the items that are in the directory.
+     *
+     * INVARIANT TOEVOEGEN
      */
-    public List<SystemItem> items = new ArrayList<>();
+    public List<SystemItem> items = new ArrayList<SystemItem>();
 
     /**
      * Method for making a directory given the name of the directory and whether the directory is writable.
      * @param name
      *        Wanted name for the new directory.
+     * @param directory
+     *        The directory of the item.
      * @param writable
      *        Boolean representing whether we want the directory to be able to change name, remove items and add items.
      */
     @Raw
     public Directory(String name, Directory directory, boolean writable){
         super(name, directory, writable);
+    }
+
+    /**
+     * Check if the given directory is a valid directory for this directory. This will only be valid if the
+     * directory is null or the directory that is given is not in the directory.
+     * @param directory The directory we want to check if it is valid.
+     * @return true if and only if the given directory is null or the given directory is not in the directory.
+     *        | result == ((directory == null) || !(this.hasAsItem(directory))
+     */
+    @Override
+    public boolean canHaveAsDirectory(Directory directory){
+        if (directory == null){
+            return true;
+        }
+        return !(this.hasAsItem(directory));
+    }
+
+    /**
+     * Method for making a rootdirectory given the name of the directory and whether the directory is writable.
+     *
+     * @effect this.Directory(name, null, writable)
+     *
+     */
+    public Directory(String name, boolean writable) {
+        this(name, null, writable);
     }
 
     /**

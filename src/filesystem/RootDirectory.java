@@ -1,5 +1,8 @@
 package filesystem;
 
+// TE VERWIJDEREN, rootdirectory is een directory met directory null.
+// Deze klasse is overbodig.
+
 public class RootDirectory extends Directory{
 
     public RootDirectory(String name, boolean writable){
