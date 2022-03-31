@@ -67,7 +67,6 @@ public abstract class SystemItem {
         return true;
     }
 
-    // MOET ANDERS VOOR ROOT WANT DAAR KAN DIRECTORY WEL NULL ZIJN! IK ZOU  CANHAVEASDIRECTORY AANPASSEN IN ROOT
     public boolean hasProperDirectory() {
         return (canHaveAsDirectory(directory) && (directory.hasAsItem(this)));
     }
