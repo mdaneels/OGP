@@ -3,6 +3,8 @@ package filesystem;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Model;
 import be.kuleuven.cs.som.annotate.Raw;
+
+import java.util.Dictionary;
 import java.util.Objects;
 
 /**
@@ -214,6 +216,27 @@ public abstract class SystemItem {
         }
         return false;
 
+    }
+
+    /**
+     * Returns the absolute path of an item as a string.
+     *
+     * @return String of the absolute path of the item.
+     */
+    public String getAbsolutePath() {
+        String path = "/";
+        Directory parent = this.getDirectory();
+        while (parent != null) {
+            path += parent.getName();
+            path += "/";
+            parent = parent.getDirectory();
+        }
+        path += this.getName();
+        if (this instanceof File) {
+            path += ".";
+            path += ((File) this).getExtension();
+        }
+        return path;
     }
 
     /**
