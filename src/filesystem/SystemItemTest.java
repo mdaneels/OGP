@@ -39,4 +39,10 @@ public class SystemItemTest {
         String path = link.getAbsolutePath();
         assertEquals("/root/directory1/link", path);
     }
+
+    @Test
+    public void directoryPathTest() {
+        String path = directory2.getAbsolutePath();
+        assertEquals("/root/directory1/directory2", path);
+    }
 }
