@@ -29,8 +29,14 @@ public class SystemItemTest {
     }
 
     @Test
-    public void pathTest() {
+    public void filePathTest() {
         String path = file.getAbsolutePath();
         assertEquals("/root/directory1/directory2/file.PDF", path);
+    }
+
+    @Test
+    public void linkPathTest() {
+        String path = link.getAbsolutePath();
+        assertEquals("/root/directory1/link", path);
     }
 }

@@ -227,8 +227,8 @@ public abstract class SystemItem {
         String path = "/";
         Directory parent = this.getDirectory();
         while (parent != null) {
-            path += parent.getName();
-            path += "/";
+            path = parent.getName() + path;
+            path = "/" + path;
             parent = parent.getDirectory();
         }
         path += this.getName();
