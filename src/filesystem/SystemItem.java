@@ -15,6 +15,8 @@ import java.util.Objects;
  * @invar the item is associated with a directory
  *
  * @author Matias Daneels
+ * @author Eva Haanen
+ * @author Arthur Cremelie
  * @version 1.0
  */
 public abstract class SystemItem {
@@ -56,7 +58,9 @@ public abstract class SystemItem {
             throw new IllegalArgumentException();
         }
         this.directory = directory;
-        directory.addItem(this);
+        if (directory != null) {
+            directory.addItem(this);
+        }
     }
 
     /**
