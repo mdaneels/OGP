@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 /**
  * A JUnit test class for testing the public methods of the filesystem.Directory class
  * @author Matias Daneels
+ * @author Arthur Cremelie
  * @version 1.0
  */
 public class DirectoryTest {
@@ -85,5 +86,18 @@ public class DirectoryTest {
         assertTrue(rootDirectory.isValidIndex(0));
         assertFalse(rootDirectory.isValidIndex(2));
         assertFalse(rootDirectory.isValidIndex(69));
+    }
+
+    @Test
+    public void testMakeDirectoryRoot_LegalCase() {
+        testDirectory1.setWritable(true);
+        testDirectory1.makeRoot();
+        assertEquals(null,testDirectory1.getDirectory());
+    }
+
+    @Test (expected = AccessRightsException.class)
+    public void testMakeDirectoryRoot_IllegalCase() {
+        testDirectory1.setWritable(false);
+        testDirectory1.makeRoot();
     }
 }
