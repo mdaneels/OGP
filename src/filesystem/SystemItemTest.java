@@ -27,12 +27,14 @@ public class SystemItemTest {
         file2 = new File("bestand",50, true, rootDirectory1, Type.JAVA);
         file3 = new File("bestand",50, true, rootDirectory2, Type.JAVA);
         file4 = new File("file", directory2, Type.PDF);
-        link = new Link("link", true, rootDirectory1, file1);
+        link = new Link("link", true, directory1, file1);
     }
 
     @Test
     public void testTotalDiskUsage(){
         assertEquals(rootDirectory1.getTotalDiskUsage(), 150);
+        assertEquals(rootDirectory2.getTotalDiskUsage(), 50);
+
     }
 
     @Test
@@ -87,6 +89,6 @@ public class SystemItemTest {
     @Test
     public void directoryPathTest() {
         String path = directory2.getAbsolutePath();
-        assertEquals("/root/directory1/directory2", path);
+        assertEquals("/root1/directory1/directory2", path);
     }
 }
