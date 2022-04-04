@@ -3,6 +3,13 @@ package filesystem;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * A JUnit testclass for testing public methods of the class SystemItem
+ *
+ * @author Arthur Cremelie
+ * @author Eva Haanen
+ */
+
 import static org.junit.Assert.*;
 
 public class SystemItemTest {
@@ -14,7 +21,9 @@ public class SystemItemTest {
     File file1;
     File file2;
     File file3;
-    File file4;
+    File filePDF;
+    File fileJAVA;
+    File fileTXT;
     Link link;
 
     @Before
@@ -26,7 +35,9 @@ public class SystemItemTest {
         file1 = new File("bestand",100, true, directory1, Type.JAVA);
         file2 = new File("bestand",50, true, rootDirectory1, Type.JAVA);
         file3 = new File("bestand",50, true, rootDirectory2, Type.JAVA);
-        file4 = new File("file", directory2, Type.PDF);
+        filePDF = new File("file", directory2, Type.PDF);
+        fileJAVA = new File("file", directory2, Type.JAVA);
+        fileTXT = new File("file", directory2, Type.TXT);
         link = new Link("link", true, directory1, file1);
     }
 
@@ -76,8 +87,12 @@ public class SystemItemTest {
 
     @Test
     public void filePathTest() {
-        String path = file4.getAbsolutePath();
-        assertEquals("/root1/directory1/directory2/file.PDF", path);
+        String pathPDF = filePDF.getAbsolutePath();
+        assertEquals("/root1/directory1/directory2/file.PDF", pathPDF);
+        String pathJAVA = fileJAVA.getAbsolutePath();
+        assertEquals("/root1/directory1/directory2/file.JAVA", pathJAVA);
+        String pathTXT = fileTXT.getAbsolutePath();
+        assertEquals("/root1/directory1/directory2/file.TXT", pathTXT);
     }
 
     @Test
