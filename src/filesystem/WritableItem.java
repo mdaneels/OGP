@@ -48,6 +48,14 @@ public abstract class WritableItem extends SystemItem{
     protected boolean isWritable() {
         return isWritable;
     }
+
+    @Override
+    public void move(Directory directory) {
+        if (!isWritable){
+            throw new AccessRightsException(this);
+        }
+        super.move(directory);
+    }
 }
 
 

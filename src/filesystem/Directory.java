@@ -16,7 +16,8 @@ public class Directory extends WritableItem{
     /**
      * List containing all the items that are in the directory.
      *
-     * INVARIANT TOEVOEGEN
+     * @invar All the elements in the list have this directory as directory
+     *        | hasProperElements()
      */
     public List<SystemItem> items = new ArrayList<SystemItem>();
 
@@ -36,23 +37,47 @@ public class Directory extends WritableItem{
 
     /**
      * Check if the given directory is a valid directory for this directory. This will only be valid if the
-     * directory is null or the directory that is given is not in the directory.
+     * directory is null (the directory is a root directory) or the directory that is given is not in the directory.
      * @param directory The directory we want to check if it is valid.
      * @return true if and only if the given directory is null or the given directory is not in the directory.
      *        | result == ((directory == null) || !(this.hasAsItem(directory))
      */
     @Override
     public boolean canHaveAsDirectory(Directory directory){
-        if (directory == null){
-            return true;
-        }
-        return !(this.hasAsItem(directory));
+        return ((directory == null)) || !(this.hasAsItem(directory));
     }
 
     /**
-     * Method for making a rootdirectory given the name of the directory and whether the directory is writable.
+     * Checks if all the elements in the list of items are proper elements
+     * @return true if all the elements have this directory as their directory
+     *          | for each element in this.getItems()
+     *          |   if (!(element.getDirectory() == this))
+     *          |       result == false
+     *          | result == true
+     */
+    public boolean hasProperElements(){
+        for (SystemItem element : items){
+            if (!(element.getDirectory() == this)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Checks if the current directory is a root directory
+     * @return true if the directory of this directory is null and if the root of this directory is this directory
+     *         | result == ((directory == null) && (getRoot() == this))
+     */
+    public boolean isRoot(){
+        return ((directory == null) && (getRoot() == this));
+    }
+
+    /**
+     * Method for making a root directory given the name of the directory and whether the directory is writable.
      *
-     * @effect this.Directory(name, null, writable)
+     * @effect a new directory is initialised with name and write access as given and directory set to null
+     *         | this.Directory(name, null, writable)
      *
      */
     public Directory(String name, boolean writable) {
@@ -206,6 +231,7 @@ public class Directory extends WritableItem{
             throw new IllegalActionException(item);
         }
         items.remove(item);
+
     }
 
     /**
@@ -249,6 +275,9 @@ public class Directory extends WritableItem{
     public void addItem(SystemItem item){
         if (!isWritable){
             throw new AccessRightsException(this);
+        }
+        if (!isValidAddItem(item)) {
+            throw new IllegalActionException(item);
         }
         items.add(item); // Add this way cause alphabetic does not work yet
     }
@@ -299,12 +328,14 @@ public class Directory extends WritableItem{
      * Check if the item is a valid item to add to this directory
      * @param item
      *        The item we want to check if it is valid.
-     * @return return false if the item is null, the item is already in a dictionary or this is in the item itself
-     * (only if item instanceof filesystem.Directory). Else return true.
-     *         | result == (item != null) && (item.getDirectory() == null) && !(item.hasAsItem(this))
+     * @return true if the directory of the item is this directory and
+     *         - in the case the given item is a directory - if the item doen't contain the directory in his list of elements
+     *         | if (item instanceof Directory)
+     *         |    result1 == (!item.hasAsItem(this))
+     *         | result == result1 && (item.getDirectory() == this)
      */
     protected boolean isValidAddItem(SystemItem item){
-        if (item.getDirectory() != null){
+        if (item.getDirectory() != this){
             return false;
         }
         if (item instanceof Directory){
@@ -328,6 +359,14 @@ public class Directory extends WritableItem{
         return totalDiskUsage;
     }
 
+    /**
+     * Makes the directory a root directory.
+     * @effect  The directory is moved from his associated directory.
+     *          | this.getDirectory.remove(this)
+     * @effect  The directory is set to null.
+     *          | this.setDirectory == null
+     *
+     */
     public void makeRoot() {
         if (!isWritable()) {
             throw new AccessRightsException(this);
@@ -336,4 +375,13 @@ public class Directory extends WritableItem{
         parent.remove(this);
         this.setDirectory(null);
     }
+
+    @Override
+    public boolean isDirectOrIndirectChildOf(Directory directory){
+        if (this.isRoot()) {
+            return this == directory;
+        }
+        return super.isDirectOrIndirectChildOf(directory);
+    }
+
 }

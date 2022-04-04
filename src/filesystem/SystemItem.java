@@ -10,6 +10,7 @@ import java.util.Objects;
  *
  * @invar name is a valid name.
  *       | IsValidName(name)
+ * @invar the item is associated with a directory
  *
  * @author Matias Daneels
  * @version 1.0
@@ -45,19 +46,19 @@ public abstract class SystemItem {
      * Set the directory to the given directory.
      *
      * @param directory The directory we want to set our directory to.
+     * @post the directory of the item is set to the given directory
      */
     @Raw @Basic
-
     public void setDirectory(Directory directory){
         if (! this.canHaveAsDirectory(directory)){
             throw new IllegalArgumentException();
         }
         this.directory = directory;
-
+        directory.addItem(this);
     }
 
     /**
-     * Returns whether the directory is a valid directory for this item.
+     * Checks if the item can be associated to the given directory
      */
     public boolean canHaveAsDirectory(Directory directory){
         if (directory == null){
@@ -66,6 +67,12 @@ public abstract class SystemItem {
         return true;
     }
 
+    /**
+     * Checks if the item has a proper directory
+     * @return true if the item can be associated to the directory and the directory is associated with the item
+     *         | (canHaveAsDirectory(directory) && (directory.hasAsItem(this)))
+     */
+    @Raw
     public boolean hasProperDirectory() {
         return (canHaveAsDirectory(directory) && (directory.hasAsItem(this)));
     }
@@ -151,18 +158,15 @@ public abstract class SystemItem {
      * @throws IllegalArgumentException
      *         The given directory must be a valid directry
      *         | !canHaveAsDirectory(directory)
-     * @throws IllegalActionException
-     *          The item can't be a  RootDirectory
-     *         | (this instanceof RootDirectory)
      * @effect The item is placed into the given directory.
      *          | setDirectory(directory) && directory.addItem(this)
      */
-    public void move(Directory directory) throws IllegalArgumentException, IllegalActionException {
+    public void move(Directory directory) throws IllegalArgumentException {
         if (!canHaveAsDirectory(directory)) {
             throw new IllegalArgumentException("Invalid directory!");
         }
-        if (this instanceof RootDirectory) {
-            throw new IllegalActionException(this);
+        if (!directory.isWritable()){
+            throw new AccessRightsException(directory);
         }
         getDirectory().remove(this);
         setDirectory(directory);
@@ -205,7 +209,6 @@ public abstract class SystemItem {
      */
     public boolean isDirectOrIndirectChildOf(Directory directory){
         Directory parent = this.directory;
-
         if (parent == directory){
             return true;
         }
