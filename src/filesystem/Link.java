@@ -3,6 +3,15 @@ package filesystem;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 
+/**
+ *
+ * A class for links.
+ *
+ *  @author Matias Daneels
+ *  @author Eva Haanen
+ *  @author Arthur Cremelie
+ */
+
 public class Link extends SystemItem {
 
     /**

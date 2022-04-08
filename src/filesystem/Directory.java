@@ -7,8 +7,9 @@ import java.util.*;
 /**
  * Class representing a directory, having a list of items.
  *
- * @author Matias Daneels
- * @author Arthur Cremelie
+ *  @author Matias Daneels
+ *  @author Eva Haanen
+ *  @author Arthur Cremelie
  * @version 1.0
  */
 public class Directory extends WritableItem{

@@ -5,7 +5,9 @@ import be.kuleuven.cs.som.annotate.*;
 /**
  * A class for signaling illegal attempts to change a file.
  *
- * @author Matias Daneels
+ *  @author Matias Daneels
+ *  @author Eva Haanen
+ *  @author Arthur Cremelie
  * @version	1.0
  */
 public class NotInMapException extends RuntimeException {

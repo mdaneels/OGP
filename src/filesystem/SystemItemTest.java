@@ -6,8 +6,9 @@ import org.junit.Test;
 /**
  * A JUnit testclass for testing public methods of the class SystemItem
  *
- * @author Arthur Cremelie
+ * @author Matias Daneels
  * @author Eva Haanen
+ * @author Arthur Cremelie
  */
 
 import static org.junit.Assert.*;

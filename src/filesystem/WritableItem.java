@@ -3,6 +3,14 @@ package filesystem;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 
+/**
+ * A class for writable items.
+ *
+ * @author Matias Daneels
+ * @author Eva Haanen
+ * @author Arthur Cremelie
+ */
+
 public abstract class WritableItem extends SystemItem{
 
     /**

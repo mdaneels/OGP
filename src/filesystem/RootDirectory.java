@@ -1,7 +1,14 @@
 package filesystem;
 
-// TE VERWIJDEREN, rootdirectory is een directory met directory null.
-// Deze klasse is overbodig.
+
+/**
+ * Class for root directory's.
+ * This class could be left out.
+ *
+ * @author Matias Daneels
+ * @author Eva Haanen
+ * @author Arthur Cremelie
+ */
 
 public class RootDirectory extends Directory{
 

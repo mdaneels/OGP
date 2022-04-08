@@ -9,8 +9,9 @@ import static org.junit.Assert.*;
 
 /**
  * A JUnit test class for testing the public methods of the filesystem.Directory class
- * @author Matias Daneels
- * @author Arthur Cremelie
+ *  @author Matias Daneels
+ *  @author Eva Haanen
+ *  @author Arthur Cremelie
  * @version 1.0
  */
 public class DirectoryTest {
